@@ -1,0 +1,15 @@
+<!--  Document Type Definition for CodeTrack Users XML Database  -->
+<!--                                                             -->
+   <!ELEMENT users (user+)>
+      <!ELEMENT user (ID, First_Name, Last_Name, Full_Name, Initials, Username, Email,
+                      Phone, Role, Password) >
+            <!ELEMENT ID                  (#PCDATA)>
+            <!ELEMENT First_Name          (#PCDATA)>
+            <!ELEMENT Last_Name           (#PCDATA)>
+            <!ELEMENT Full_Name           (#PCDATA)>
+            <!ELEMENT Initials            (#PCDATA)>
+            <!ELEMENT Username            (#PCDATA)>
+            <!ELEMENT Email               (#PCDATA)>
+            <!ELEMENT Phone               (#PCDATA)>
+            <!ELEMENT Role                (#PCDATA)>
+            <!ELEMENT Password            (#PCDATA)>

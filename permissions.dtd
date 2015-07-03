@@ -1,0 +1,8 @@
+<!--  Document Type Definition for CodeTrack permissions XML Database  -->
+<!--                                                                   -->
+   <!ELEMENT permissions (permission+)>
+      <!ELEMENT permission (ID, Project_ID, User_ID, Access) >
+            <!ELEMENT ID                  (#PCDATA)>
+            <!ELEMENT Project_ID          (#PCDATA)>
+            <!ELEMENT User_ID             (#PCDATA)>
+            <!ELEMENT Access              (#PCDATA)>            

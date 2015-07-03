@@ -1,0 +1,131 @@
+
+
+       Troubleshooting Tips for CodeTrack v. 0.99
+
+
+ Step 0a (pre-troubleshooting)
+
+    Initial login is admin/codetrack
+
+
+ Step 0b (pre-troubleshooting)
+
+     Create a simple php file in the codetrack directory containing phpinfo();
+     If you can't see this in a browser, then get help.  Something is seriously
+     broken (or maybe trivial-but-vital).
+
+
+ 1.  Re-read the permissions instructions in INSTALL.txt (95% of CodeTrack
+     problems are related to overly-restrictive permissions.  Apache *must*
+     have read priveleges for all fies, read+write for all xml files, and
+     read+write+execute on all directories.  On most Unixes, this means that
+     the higher level directories must be similarly opened.  See the Purple
+     book (formerly the Red book) for more info.
+
+      Here is an example of a CodeTrack installation with reasonable permissions set
+      (note the differences in directory entries):
+
+            [root@staging codetrack]# ls -lh
+            total 184k
+            drwxr-xr-x    2 nobody   nobody       4.0k Mar 14 22:23 attachments
+            drwxr-xr-x    2 nobody   nobody       4.0k Mar 14 22:23 backups
+            -rw-r--r--    1 nobody   nobody       1.5k Mar 13 21:16 bugs.dtd
+            -rw-r--r--    1 nobody   nobody       117k Mar 14 21:28 codetrack.php
+            -rw-r--r--    1 nobody   nobody       7.7k Mar 14 22:35 config.inc.php
+            drwxr-xr-x    2 nobody   nobody       4.0k Mar 14 22:23 docs
+            drwxr-xr-x    2 nobody   nobody       4.0k Mar 14 22:23 images
+            -rw-r--r--    1 nobody   nobody        128 Jul 23  2003 index.html
+            drwxr-xr-x    2 nobody   nobody       4.0k Mar 14 22:23 javascript
+            -rw-r--r--    1 nobody   nobody        483 Mar  7 21:07 permissions.dtd
+            -rw-r--r--    1 nobody   nobody        623 Mar  7 21:07 projects.dtd
+            -rw-r--r--    1 nobody   nobody       1.6k Mar 14 21:06 README.txt
+            drwxr-xr-x    2 nobody   nobody       4.0k Mar 14 22:23 style
+            -rw-r--r--    1 nobody   nobody        843 Mar  7 21:07 users.dtd
+            drwxr-xr-x    2 nobody   nobody       4.0k Mar 14 22:35 xml
+
+
+      For a slightly more secure setup, here is an example of a CodeTrack installation with
+      stricter permissions set (note that only the XML, attachments and backups directories
+      are writable).
+
+            [root@staging codetrack]# ls -lh
+            total 184k
+            drw-------    2 nobody   nobody       4.0k Mar 14 22:23 attachments
+            drw-------    2 nobody   nobody       4.0k Mar 14 22:23 backups
+            -rw-------    1 nobody   nobody       1.5k Mar 13 21:16 bugs.dtd
+            -rw-------    1 nobody   nobody       117k Mar 14 21:28 codetrack.php
+            -rw-------    1 nobody   nobody       7.7k Mar 14 22:35 config.inc.php
+            drw-------    2 nobody   nobody       4.0k Mar 14 22:23 docs
+            dr--------    2 nobody   nobody       4.0k Mar 14 22:23 images
+            -rw-------    1 nobody   nobody        128 Jul 23  2003 index.html
+            dr--------    2 nobody   nobody       4.0k Mar 14 22:23 javascript
+            -rw-------    1 nobody   nobody        483 Mar  7 21:07 permissions.dtd
+            -rw-------    1 nobody   nobody        623 Mar  7 21:07 projects.dtd
+            -rw-------    1 nobody   nobody       1.6k Mar 14 21:06 README.txt
+            dr--------    2 nobody   nobody       4.0k Mar 14 22:23 style
+            -rw-------    1 nobody   nobody        843 Mar  7 21:07 users.dtd
+            drw-------    2 nobody   nobody       4.0k Mar 14 22:35 xml
+            
+
+2.   Verify that your hostname is correct.  Many folks have a broken Linux
+     installation, but just didn't realize it yet.  If you want to use
+     e-mail, try typing "hostname" or "hostname --fqdn" at a command prompt.
+     If it reads localhost or localhost.localdomain, this is wrong.
+
+     With a setup like this, Apache is reporting a bogus hostname (unless you
+     are truly running it *only* for local development), and this can affect SSL,
+     cookies, and definately e-mail delivery.  Most company's e-mail servers would
+     reject mail originating from "localhost.localdomain" as a bogus address,
+     possibly dropping messages because of spam.  This can be the case even when
+     you are sending mail to other users *inside* your own organization!
+
+
+3.  Check the mail log.  On Linux, it's often located at:  /var/log/maillog
+    Do a "tail" on your mail log for a good breakdown on what happened:
+
+        tail /var/log/maillog
+
+    If you see entries referring to "timeout", this may be caused by draconian
+    firewall rules, or a spam filter.  If you see warnings about untrusted
+    user "nobody" changing the origin address, this is not necessarily wrong,
+    but means that the user running your webserver is not on the sendmail (or
+    qmail) trusted user list.  I don't recommend you pursue this path unless
+    you have ruled out the more common problems with invalid hostname or DNS (see
+    below).
+
+
+4.  Rule out the possibility of a broken DNS.  From a command prompt, try:
+
+      nslookup name.of.your.machine
+
+    If you get something other than what you expect, talk to your local system
+    admin.  This is critical.
+
+
+5.  Another thing to try is to set up a Hotmail or Yahoo Mail account, and try
+    setting one of your users up with an email address there.  As of early 2002,
+    these organizations block virtually nothing, and will usually allow very broken
+    mail messages in.  If this works, then revisit your hostname settings, along
+    with the return email address setting in codetrack.inc.php:
+
+      DEFINE ("CT_RETURN_ADDRESS", "me@mycompany.org" );
+
+    In the vast majority of cases, this is the culprit.  If you've tried everything
+    else, and are running a PHP version 4.05 or higher, another possibility is
+    to disable the "envelope return address" -- ONLY available on non-Windows
+    PHP from version 4.05 higher:
+
+      DEFINE ( "CT_USE_EXTRA_MAIL_HEADER", FALSE );
+
+    Note that this is not a "magic bullet" -- usually it is a bandaid of last
+    resort for draconian anti-spam SMTP servers, and it WILL generate (benign)
+    warnings in your mail log.
+
+
+6. Windows users -- re-read INSTALL.txt for setting up php.ini the first time
+   for proper mail delivery.  Note that you do NOT have to run a mail server,
+   and can often use your ISP's SMTP box as an outbound relay.
+
+
+7. If you're still stuck, send us a mail to codetrack@openbugs.org
+   We LOVE to help!

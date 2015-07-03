@@ -1,0 +1,144 @@
+
+  _____________________________________________________________
+  
+       A 5 minute guide to installing CodeTrack v.0.99
+         (FIRST TIME only; existing users, see below)
+  _____________________________________________________________
+
+
+In a nutshell:  copy files to Apache-owned space, set permissions, specify a return e-mail
+address, and go.
+
+
+ 1. Create a directory in the htdocs root space, for example:
+
+    mkdir  /home/httpd/htdocs/codetrack
+
+
+ 2. Unzip and untar the codetrack files to this directory:
+
+    tar -xzvf codetrack.tar.gz /home/httpd/htdocs/codetrack
+
+    (***Windows users can use Winzip, for either the tar.gz or zip)
+
+
+ 3. Set the permissions for the directory so that it is readable and writable by
+    the apache owner:
+
+    chown -R nobody.nobody /home/httpd/htdocs/codetrack
+    chmod -R 600 ` find /home/httpd/htdocs/codetrack -type f `
+    chmod -R 700 ` find /home/httpd/htdocs/codetrack -type d `
+
+    (Windows users can do the same thing through the GUI, just make sure the XML
+    files and the attachments directory are writeable.  You may have to set the
+    ownership to Administrator.  Thanks, Microsoft!)
+
+
+ 4. To use e-mail notification, edit config.inc.php and set a real return address for codetrack:
+
+    change: DEFINE ("CODETRACK_RETURN_ADDRESS", codetrack@localhost" );
+
+    to:     DEFINE ("CODETRACK_RETURN_ADDRESS", "CodeTrackAdmin@myCompany.com" );
+
+    or:     DEFINE ("CODETRACK_RETURN_ADDRESS", "DoNotReply@foo.org" );
+
+
+   To *DISABLE* e-mail in CodeTrack, edit config.inc.php, and set
+      CODETRACK_ENABLE_EMAIL to FALSE
+
+    ___________________________________________________________________________
+
+    SPECIAL NOTE TO PHP-ON-WINDOWS USERS ONLY:
+
+       If you've never used the PHP mail functions on your web server before, edit
+       the php.ini file and set the options below.  Note that you might be able
+       to use your ISP's SMTP server if you don't have one.  The box running PHP
+       does NOT have to be running a mail server (i.e. Exchange) for this to work.
+
+       php.ini:
+
+          SMTP       =  localhost            ;for win32 only
+          sendmail_from =  me@localhost.com  ;for win32 only
+
+            to:
+
+          SMTP       =  mailserver.foo.org    ;for win32 only
+          sendmail_from =  bob@foo.org        ;for win32 only
+
+     You will need to stop and restart Apache for the changes to take effect
+    ____________________________________________________________________________
+
+
+ 5. Fire up a browser and navigate to  http://server-name/codetrack/
+
+
+ 6. Initially, login as the System Admin:
+
+    login:     admin
+    password:  codetrack
+    project:   Test Project
+
+    After logging in, change your password, set up a few users and your initial
+    "real" project.
+
+	That's it!  If you get stuck, please re-read this document, and check
+	TROUBLESHOOTING.txt, but feel free to write us at:  codetrack@openbugs.org
+
+
+
+Special note for Netscape 4.x users:
+
+   If some (or many) of your users will be accessing CodeTrack via the Netscape 4
+   series, you will probably want to uncomment the following setting in codetrack.php:
+
+      #DEFINE ("OPTIONAL_UGLY_NN4_HACK", " WRAP=VIRTUAL ");
+
+        to
+
+      DEFINE ("OPTIONAL_UGLY_NN4_HACK", " WRAP=VIRTUAL ");
+
+   CodeTrack was designed to be 100% W3C compliant as XHTML Strict on
+   the client, and unfortunately, in Navigator 4.x when typing a long line inside
+   a TEXTAREA box in a form, the words will continue without breaking.  So, a two
+   (or ten) sentence bug description will only display the first 80 characters or
+   so; the rest will scroll out to the right of the text box.  Technically, there
+   is nothing wrong with that, but it means that to read bug reports, you would
+   have to constantly scroll the horizontal bar to read the full text. This CodeTrack
+   DEFINE setting turns on vendor-proprietary extensions which violate the W3C
+   standard, but will be safely ignored on all modern browsers.  We have tested
+   this in Mozilla, Opera, and IE, and found that all ignored the attribute and
+   displayed without incident.  We have turned this off by default so that all
+   bug report pages will validate as 100% W3C compliant.  There is no CSS or
+   "legal" HTML equivalent to result in the same behavior, and we are against
+   browser detection on general principal.  Again, this is ONLY an issue for the
+   Netscape 4.x series browsers.
+
+
+
+  _____________________________________________________________
+  
+       A 3 minute guide to UPGRADING to CodeTrack v.0.99
+              (only applies to existing users)
+  _____________________________________________________________
+
+
+1. Backup and save all your current xml files somewhere safe, just in case.
+
+2. Unzip codetrack.tar.gz into a directory in Apache-accessible space.
+
+3. Copy your current XML files to the xml folder
+
+4. If you're on Unix/Linux, set the permissions for the current directory
+	and all subs to the owner and group of the webserver (i.e., httpd/httpd),
+	and the permissions to 750. If you're on Windows, you shouldn't have
+	to change permissions.
+
+5. Fire up a browser and all your accounts, bugs, and passwords should Just Work.
+
+   Note, if you have tweaked your original version, settings in the DEFINE blocks
+   of the old codetrack.php will need to replace those in config.inc.php
+   
+	That's it!  If you get stuck, please re-read this document, and check
+	TROUBLESHOOTING.txt, but feel free to write us at:  codetrack@openbugs.org
+   
+

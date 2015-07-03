@@ -1,0 +1,143 @@
+
+
+   Customization Options for CodeTrack -- see config.inc.php for more details
+
+
+Sets the reply-to address on email notifications, def. is "codetrack@localhost"
+CT_RETURN_ADDRESS
+
+Disabling will remove all rendered mail-specific widgets, default is TRUE
+CT_ENABLE_EMAIL
+
+Pre-selects a project on login page. Must be exact match to project name
+CT_DEFAULT_PROJECT
+
+Pre-selects a project lead for new Projects. Must be exact match to a user's FULL name
+CT_DEFAULT_PROJECT_LEAD
+
+Force client logout after x seconds of inactivity, def. is 28800 (8 hrs), NO quotes
+CT_DEFAULT_PAGE_TIMEOUT
+
+Increase to 8 or more for increased security on public sites, def is 1, NO quotes
+CT_MIN_PASSWORD_LENGTH
+
+Set to TRUE to prevent Developers from closing/deleting a bug. Only users with
+ explicit authority (CT_QA_WHO_CAN_CLOSE) are allowed to do so, def is FALSE
+CT_QA_ENFORCE_PRIVS
+
+If CT_ENFORCE_QA_PRIVS is enabled (above), then only these roles can close/delete a bug, MUST quote
+CT_QA_WHO_CAN_CLOSE
+
+Set to TRUE to allow users with role of Guest to edit existing issues, def is FALSE
+CT_GUESTS_CAN_EDIT
+
+Set to TRUE to allow users with role of Guest to create new issues, def is FALSE
+CT_GUESTS_CAN_CREATE
+
+
+____________________________________________________________________________
+
+   95% of customizations are *above* this section. Power users, go crazy...
+____________________________________________________________________________
+
+
+Envelope reply header, for aggressive anti-spam SMTPs (PHP v. 4.05+ only), def. is TRUE
+CT_USE_EXTRA_MAIL_HEADER
+
+
+See SECURITY.txt for more info on CodeTrack crypto.
+ *HIGHLY* recommended to change this (alpha+numbers only)
+CT_PRIVATE_KEY
+
+
+Next is the only date field that should be customized.  See date() reference on php.net
+ Do NOT change in the middle of a project, default is "j-M-Y g:i A"
+CT_DATE_FORMAT
+
+
+Show/hide user email & phone #'s on Tools page (user view), def. is TRUE
+CT_DISPLAY_ADDRESSES
+
+
+Show balloon messages that appear over widgets & links, default is TRUE
+CT_ENABLE_TOOLTIPS
+
+
+Set next to customize which columns are displayed on the home page.  Warning: Test at resolutions most of your
+ users will actually use. I.e., if you specify too many columns everything at, say, 800x600 will wrap, creating
+ two lines for every entry. Default is  "Project,ID,Status,Severity,Summary,Last_Updated,Assign_To,Developer_Response"
+
+CT_HOME_PAGE_DATA_COLUMNS
+
+
+Only allow attachment uploads of these file types on issue reports
+(i.e., not .php or .pl -- Yikes! or .mp3, etc. )
+ Let in that which is known, block all others.  Add to the list, don't just disable.
+ Not case sensitive. Note: NO SPACES BETWEEN ENTRIES!
+
+CT_LEGAL_ATTACHMENTS
+
+
+Disabling potenially opens a major security hole (i.e., uploading a .php file), def. is TRUE
+CT_ENFORCE_LEGAL_ATTACHMENTS
+
+Enable to attempt client-side (js) validation of email address on create new user, def. is TRUE
+CT_PEDANTIC_VALIDATION
+
+Semi-fugly work-around b/c we can't simply append XML files, def. is 64
+CT_LAST_LINE_SIZE
+
+In seconds; I/O sucks if this needs adjusted up, default is 10
+CT_LOCKFILE_TIMEOUT
+
+Only return this many search results, default is 100
+CT_MAX_SEARCH_RESULTS
+
+Bytes, should be <= upload_max_filesize in php.ini, def. is 2000000 (2MB)
+CT_UPLOAD_MAX_FILESIZE
+
+Issue description max. length, b/c of an old Oracle varchar2 bug, def. is 1998
+CT_MAX_DESCR_SIZE
+
+Maximum length of an attachment filename (we have to pick something)
+CT_MAX_ATTACHMENT_FILENAME_SIZE
+
+When exporting to CVS/SQL, translate newlines to this (2 chars), def. is "__"
+CT_NEWLINE_SYMBOL
+
+No Valid W3C-compliant CSS or HTML equivalent for this in Netscape 4.x textareas
+CT_OPTIONAL_UGLY_NN4_HACK
+
+
+The next block of constants drives most of the form and drop down (DD) choices in CodeTrack.
+Customize to your heart's content, but note that THERE SHOULD BE NO SPACES BETWEEN CHOICES!
+*Adding* choices is always fine, but be careful about *modifying* existing entries in the
+middle of a project, as you risk orphaning existing records.  It might help to think of all
+of these lists as master lookup tables. Note: There's NO risk in changing the *x_DEFAULT_x* entries.
+
+A leading comma-only entry (example:  ",Fixed..." ) creates a blank option on drop down and
+allows for default null value choice.  See CUSTOMIZING.txt for more info.
+
+CT_ACCESS_LEVELS
+CT_DEFAULT_ACCESS_LEVEL
+CT_BUG_SEVERITIES
+CT_DEFAULT_SEVERITY
+CT_BUG_STATUSES
+CT_DEVELOPER_RESPONSES
+CT_DEFAULT_DEVELOPER_RESPONSE
+CT_MAJOR_BROWSERS
+CT_DEFAULT_BROWSER
+CT_MAJOR_OS
+CT_DEFAULT_OS
+CT_XML_DIRECTORY
+CT_XML_BACKUPS_DIRECTORY
+CT_ENABLE_AD_HOC_DEBUG
+CT_CODE_VERSION
+CT_ASCENDING
+CT_DESCENDING
+CT_DROP_HISTORY
+CT_KEEP_HISTORY
+CT_XML_BUGS_FILE
+CT_XML_USERS_FILE
+CT_XML_PROJECTS_FILE
+CT_XML_PERMISSIONS_FILE

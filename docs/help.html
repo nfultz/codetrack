@@ -1,0 +1,273 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>CodeTrack Help</title>
+	<style type="text/css">
+
+             body { font-family: verdana, sans-serif; font-size: 10pt; }
+  .outlineheading { font-family: verdana, sans-serif; font-size: 11pt; text-align: left; }
+		 .mainTitle { margin-bottom: 0; margin-top: 2%; text-align: center;
+						  font-family: verdana, sans-serif; font-size: 12pt; font-weight: bold; }
+		   .nonProp	{ font-family: courier, sans-serif; font-size: 9pt; }
+			  .intro { font-family: verdana, sans-serif; font-size: 9pt; }
+
+	</style>
+</head>
+<body vlink=blue link=blue alink=blue>
+<div style="width: 95%; margin-left: 3%;">
+
+<br><center><div class="mainTitle">CodeTrack Help</div></center><br><br>
+
+<div class="outlineHeading"><a href="#buglist" name="buglist">The Home Page</a></div><br>
+
+<p>
+This is the first page that you'll see when you login to CodeTrack.  Information 
+shown on this page is a brief summary of all the issues currently being tracked 
+for your selected project. Bugs or Issues are always presented from oldest to 
+newest, in order of status.  So, for example, the oldest outstanding Open issues 
+are always at the top of the list, followed by any Deferred issues, and finally 
+all the Closed issues are displayed.
+</p>
+
+<p>
+One of the first things you'll notice on the home page is <b>a little drop down box</b>
+right above the summary table, with various project names.  This little widget appears
+throughout CodeTrack and is used to quickly change your default project.  Once you have
+selected a project, the screen will refresh, and all menus and buttons will be re-written
+with respect to your new current project.  Any new bug reports or ad-hoc searches will
+default to this project, as will the summary information on your home page.  To give a
+concrete example, imagine a scenario where we're tracking a number of projects, including
+"The Super Secret Killer App" and "The Helpdesk Database."  When you first logged in, you
+chose a default project, and assuming it was "Super Secret Killer App", that is what will
+be shown on the home page.  If you were to click on reports, several of the "pre-canned" 
+searches will be listed, such as "All Super Secret Killer App Open Bugs".  Similarly, if
+you were to click on New Bug, the default project will be pre-chosen as "Super Secret
+Killer App".  Now, if you go back to the Home page and choose "The HelpDesk Database", the
+screen will refresh, and all screens and hot-links will reflect your new project.  If this
+isn't clear, give it a try and it should make sense.
+</p>
+
+<p>
+Within the bug summary table on the home page, a number of fields are shown. 
+<b>"ID"</b> is an internal number that the system uses to refer to a unique bug. 
+Note that CodeTrack increments ID numbers system-wide, meaning that simply 
+because a project shows a particular bug ID of, say, 103, that does not 
+necessarily indicate that 103 bugs have been reported for that project (the 
+actual number of bugs is displayed at the bottom of the table).  You might find 
+the bug ID is a convenient nomenclature to use when conversing with other team 
+members, as it is completely unambiguous.  Contrast "Look at my response to the 
+off-by-one data error for Issue #351", versus "Did you guys fix that weird 
+problem we were talking about last week?"
+</p>
+
+<p>
+To see all the details for a given report, simply click on the <b>ID 
+link</b> in the summary table.  This will take you to the <a href="#editbug">Edit Bug page</a>,
+which shows the most current information for a particular issue.
+<p>
+
+<p>
+The <b>"Status"</b> column reports whether a bug is Open, Closed, or Deferred (your 
+system administrator may also have added additional types of status 
+descriptions).  Note that if a developer or analyst has responded to or added any 
+information about a particular issue, the status indicator will change to 
+italics.  For example "Open" becomes "<i>Open</i>", and so on.  This allows you 
+to quickly scan the summary table and see which issues for which other team 
+members have taken action.
+</p>
+
+<p>
+Information in the <b>"Severity"</b> column reflects how onerous a particular issue has
+been rated by the QA team.  The standard options are "Fatal", "Serious", "Minor", and 
+"Cosmetic".  These are set at the time of a new bug report, and can be adjusted up or
+down once a report has been opened.
+</p>
+
+
+<p> The <b>"Submit Time"</b> is just that -- the time at which the 
+<i>original</i> bug or issue was opened.  You might notice that with each 
+increasing ID number, the submit times are later; lower numbers imply a longer 
+time outstanding than higher ones.  Also, if you are working on teams spread out 
+geographically, you should note that CodeTrack reports all times based on the 
+time zone set on the web server, not the clock on your desktop or that of the 
+person's PC submitting a report.  If you find that the time stamps on bug 
+reports are incorrect, you may want to contact your CodeTrack system 
+administrator to check if the web server clock is current.
+</p>
+
+<p>
+<b>"Module"</b> is the name of a program or screen name from which an issue 
+arose.  In web-based projects, this might be a server-side page name or a screen 
+title;  in other milieus, this might be a SAS program, a stored procedure or 
+function on the database, and so on.  See the information below on <a href="#newbug">New Bugs</a>
+for more information on this field.
+</p>
+
+<p>
+The <b>Summary</b> is a brief description of the problem.  If the original summary was
+particularly lengthy (something highly discouraged!), the last few characters of this field
+will show as consecutive periods "..." to indicate that more text exists than is being displayed.
+You can think of the summary as a title of the bug or issue at hand.
+</p>
+
+<p> Immediately below the summary table is shown the <b>total number of bugs</b> 
+or issues for your project, followed by two graphs which break down the counts 
+by Status and Severity.  As with all information in CodeTrack, each time you 
+click on a link, go to a new page, or even go forward or back in your browser, 
+the information shown is updated in <b><i>real time</i></b>.  This means that if one of your
+colleagues has added a new report, or the QA folks have closed an outstanding
+bug, it will be reflected on your screen as soon as you navigate to any new
+page.
+<p>
+
+<div class="outlineHeading"><a href="#editbug" name="editbug">Editing a Bug</a></div><br>
+
+<p>
+At the top of the Edit Bug page is a set of buttons to navigate through all the 
+issues, opened, closed, and deferred, for your current project.  By pressing 
+<b>Prev</b> or <b>Next</b>, you can quickly browse issues at a detail-level 
+view.  When you come to the end of the list, the button labels will grey out and 
+become disabled.  If you click a button and nothing happens, then you're either 
+looking at the first or last bug that can be displayed.  As noted in the 
+discussion of the <a href="#buglist">Home page</a>, bug ID numbers are not 
+necessarily sequential for any given project, so do not be concerned if you 
+notice gaps in the numbers.  A bug ID# of, say, 216, is not meant to indicate
+that this is the 216th bug for a project.  To see the true number of bugs, simply
+click on the Home page button, and review the information below the main summary
+table.
+</p>
+
+<p>
+The <b>Project</b> choice should be pre-selected to your current project.  If you wish
+to file a bug for a project other than your default, simply make the selection here,
+and your report will be filed with that project.
+</p>
+
+<p>
+<b>"Module"</b> is the name of a program or screen name from which an issue 
+arose.  In web-based projects, this might be a server-side page name or a screen 
+title;  in other milieus, this might be a SAS program, a stored procedure or 
+function on the database, and so on.  Because this snippet will be displayed on 
+the home summary screen, you may want to capitalize each word.  Also, the information
+in the Module box should be as brief as possible:  <span class="nonProp">"Search Screen", "Q4 Financials,"</span>
+etc. are good examples.
+</p>
+
+<p>
+Although not required, <b>"Version"</b> information is strongly encouraged.  For traditional
+applications, this could be something like <span class="nonProp">v.3.6Beta</span>. In other settings,
+a date might be more useful "Jan. 31st Demo"
+</p>
+
+<p>
+Your choice of <b>"Severity"</b> reflects the degree to which a particular issue 
+impacts the project.  The standard options are "Fatal", "Serious", "Minor", and 
+"Cosmetic".  These are set at the time of a new bug report, and can be adjusted 
+up or down once a report has been opened (but note, in many software engineering 
+environments, only QA or Managers are authorized to change the severity label on 
+an open issue).  Also, although the particulars vary by organization, generally 
+Fatal is reserved for a show-stopper level bug, or one in which data are 
+corrupted or grossly misrepresented in unacceptable ways.  In web-based 
+projects, a terminating JavaScript or database error might qualify for "Fatal." 
+In a data analysis project, "Fatal" might refer to critical missing or erroneous
+summary data.  In traditional desktop applications, General Protection Faults or 
+segmentation dumps would probably fit the bill. "Serious" generally implies that 
+although an application can still run, or a data/content problem exists, and 
+should be addressed before roll-out. The distinction between "Minor" and 
+"Cosmetic" also tends to vary, and is often context based:  A typo buried deep 
+in an obscure section of text, might be rated "Cosmetic", while "Welcom to the 
+ABC Company" might qualify for "Minor", or perhaps even "Serious" because of it's 
+prominent visibility.  Often trivial formatting or easy-to-fix display issues are 
+rated "Cosmetic".  When in doubt, check your local policies.
+</p>
+
+<p>
+The <b>Brief Summary</b> of Problem should be thought of as a pithy title for your
+report -- a few words that capture the essence of the issue at hand.  Note that if
+your summary is too wordy, it will be truncated on the main summary screen (shown as
+something along the lines of "My Long-Winded Summary is that...").  Good examples of
+bug summaries are "Gender Totals Don't Sum to 100%" or "Blue Screen of Death on Search
+Screen".
+</p>
+
+<p>
+Often when entering bug reports, it is convenient to include a screenshot or 
+sample data snippet to better illustrate the problem.  Sometimes, an entire program
+or output log would be useful.  This is done in CodeTrack via an <b>attachment</b> on
+bug reports.  If you're familiar with web-based mail services like Hotmail or Yahoo Mail, 
+the procedure is much the same.  Simply click on the Attachment "Browse" button, and
+navigate to the file you would like to include.  This can be any type of file on your
+PC, such as a Microsoft Word document, an Excel file, a JPG image, etc.  Once the 
+file is highlighted, click Open and the name should be automatically typed in the
+attachment text box.  Note that although you can manually type in the directory and
+file name of your attachment, doing so will likely lead to more problems because of
+typos.  Much like a phone number, there's no such thing as "close" here.  If the file
+name is invalid, no attachment will be sent with your report.
+</p>
+
+<p>
+If you are accessing CodeTrack over a dial up connection and are including an 
+attachment, you may want to Zip up your file first.  Often, this will cut your 
+save time to a half or a third, which can be very noticable for large documents. 
+Conversely, if you have several users who access CodeTrack from home, you may 
+want to be kind and institute a "zipped-file-only" policy for attachments, to
+avoid the proverbial 5 Meg Visio download over a dreadfully slow 56K connection.
+</p>
+
+<p>
+If your project has been categorized as being <b>Web-based</b>, the New and Edit 
+bug forms will include three fields specific to a web environment:  "Tested 
+Browser", "Browser-Specific", and "Tested OS".  The choices for these fields 
+should be pretty straight forward. Very often, subtle (or maybe not-so-subtle) 
+differences between different browser versions exist, and may be useful to track 
+over time.  It is quite commonplace to have the same web page render <i>very</i> 
+differently between, say Internet Explorer 5.0, and Netscape 4.7.  Many shops 
+have found that by tracking the Operating System, browser, and browser version 
+used in testing, several problems not originally attributed to the browser 
+itself can be traced to particularly buggy implementations, of say, Cascading 
+Style Sheet inheritance, or an oddball JavaScript problem.  Note that the 
+choices in the Tested Browser and Tested OS are completely dynamic and are 
+easily updated as new products come to market.  Also, the system allows default 
+choices for most options, so if your shop has standardized on, Windows 2000 
+Service Pack2 and Netscape version 6, for example, these can be set to auto-fill.
+See your CodeTrack system administrator for help in customizing or adding
+options for these drop-downs.
+</p>
+
+<p>
+Near the bottom of the New Bug page, and in the lower middle of the Edit Bug
+page, appears the <b>"Save" "Cancel" and "Reset"</b> buttons.
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+</body>
+</html>

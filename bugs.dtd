@@ -1,0 +1,27 @@
+<!--  Document Type Definition for CodeTrack Bugs XML Database  -->
+   <!ELEMENT bugs (bug+)>
+      <!ELEMENT bug (ID, Submit_Time, Project, Module?, Version?, Severity,
+                     Summary, Description, Delete_Bug?, Tested_Browser?,
+                     Browser_Specific?, Tested_OS?, Submitted_By, Status,
+                     Assign_To?, Attachment?, Developer_Comment?,
+                     Developer_Response?, Last_Updated?, Updated_By?) >
+            <!ELEMENT ID                  (#PCDATA)>
+            <!ELEMENT Submit_Time         (#PCDATA)>
+            <!ELEMENT Project             (#PCDATA)>
+            <!ELEMENT Module              (#PCDATA)>
+            <!ELEMENT Version             (#PCDATA)>
+            <!ELEMENT Severity            (#PCDATA)>
+            <!ELEMENT Summary             (#PCDATA)>
+            <!ELEMENT Description         (#PCDATA)>
+            <!ELEMENT Delete_Bug          (#PCDATA)>
+            <!ELEMENT Tested_Browser      (#PCDATA)>
+            <!ELEMENT Browser_Specific    (#PCDATA)>
+            <!ELEMENT Tested_OS           (#PCDATA)>
+            <!ELEMENT Submitted_By        (#PCDATA)>
+            <!ELEMENT Status              (#PCDATA)>
+            <!ELEMENT Assign_To           (#PCDATA)>
+            <!ELEMENT Attachment          (#PCDATA)>
+            <!ELEMENT Developer_Comment   (#PCDATA)>
+            <!ELEMENT Developer_Response  (#PCDATA)>
+            <!ELEMENT Last_Updated        (#PCDATA)>
+            <!ELEMENT Updated_By          (#PCDATA)>

@@ -1,0 +1,181 @@
+
+
+
+  CodeTrack Function Reference
+
+
+     admin_check()
+
+
+     append_xml_file_node( $filename, $node, $closing_root_tag )
+
+
+     authorized_user( $project_id, $user_id, $permission_table )
+
+
+     bar_graph( $values_array )
+
+
+     brute_force_lock( $filename )
+
+
+     brute_force_lock_check( $filename )
+
+
+     brute_force_lock_release( $filename )
+
+
+     build_new_session_cookie( $user_data, $selected_project )
+
+
+     build_updated_session_cookie( $project_name, $current_session )
+
+
+     calc_next_node_id( $node_list )
+
+
+     calc_session_id( $user_full_name )
+
+
+     create_summary( &$project_table )
+
+
+     create_xml_backups()
+
+
+     draw_add_edit_bug_form( $project_table, $user_table, $bug_id )
+
+
+     draw_admin_page()
+
+
+     draw_change_password_form( $user_table )
+
+
+     draw_export_options( $current_project )
+
+
+     draw_login_page( $project_table, $failed="", $session_expired="", $no_cookies="" )
+
+
+     draw_page_bottom()
+
+
+     draw_page_header()
+
+
+     draw_page_top( $this_page )
+
+
+     draw_prev_next_buttons( $prev_id, $next_id, &$bug_to_edit, $destination_page, $extra_buttons=FALSE )
+
+
+     draw_project_access_form( $project_table, $user_table, $permission_table )
+
+
+     draw_project_hotlist_widget( $project_table, $current_project, $destination )
+
+
+     draw_project_maintenance_form( $user_table )
+
+
+     draw_read_only_table( $data_table )
+
+
+     draw_reports_page( $project_table, $user_table )
+
+
+     draw_table( &$data_array, $title, $filter, $project_table='' )
+
+
+     draw_tools_page()
+
+
+     draw_user_maintenance_form()
+
+
+     draw_view_bug_page( $bug_id )
+
+
+     draw_xml_backups_page( $success='' )
+
+
+     encrypt_password( $plaintext_password )
+
+
+     export_database( $export_options, $user_agent )
+
+
+     get_array_index_for_id( &$data_array, $id )
+
+
+     get_next_bug_id( $bug_array, $current_row_id )
+
+
+     get_prev_bug_id( &$bug_array, $current_row_id )
+
+
+     get_stats( $time_in_seconds )
+
+
+     no_cache()
+
+
+     parse_dtd_file( $filename )
+
+
+     parse_human_date( $date_string ){
+
+
+     parse_xml_file( $xml_filename, $drop_history=FALSE, $sort_element='', $sort_order='' )
+
+
+     print_audit_trail( $data_array, $id )
+
+
+     print_deleted_bugs( $bug_table )
+
+
+     process_file_attachment( $tmp_filename, $requested_filename )
+
+
+     push_mime_info( $browser_string, $download_filename, $force_download )
+
+
+     reverse_htmlspecialchars ( $html_encoded_string )
+
+
+     rewrite_xml_file( $filename, $parsed_tree, $major_element_tag )
+
+
+     save_bug_data( $id='', $raw_bug_data, $attachment_data='', $original_submit_time='',
+
+
+     save_permission_data( $permission_data, $permission_table, $project_table )
+
+
+     save_project_data( $project_data, $project_table )
+
+
+     save_user_data( $user_data, $user_table, $notify_user='', $apache_vars )
+
+
+     scrub_and_tag_form_data( $data_array )
+
+
+     search_bugs( $pattern, $search_options )
+
+
+     set_session_cookie_load_page( $serialized_session, $page_to_load )
+
+
+     update_user( $user_data, $user_table, $old_password=""  )
+
+
+     update_xml_file_node( $filename, $parsed_tree, $major_element_tag, $update_node )
+
+
+     valid_password( $login_data, $user_table, $user_index )
+
+
+     

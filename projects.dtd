@@ -1,0 +1,11 @@
+<!--  Document Type Definition for CodeTrack Projects XML Database  -->
+<!--                                                                -->
+   <!ELEMENT projects (project+)>
+      <!ELEMENT project (ID, Title, Test_Lead, Description, Project_Type,
+                         Preferred_Title) >
+            <!ELEMENT ID                  (#PCDATA)>
+            <!ELEMENT Title               (#PCDATA)>
+            <!ELEMENT Test_Lead           (#PCDATA)>
+            <!ELEMENT Description         (#PCDATA)>
+            <!ELEMENT Project_Type        (#PCDATA)>
+            <!ELEMENT Preferred_Title     (#PCDATA)>

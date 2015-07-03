@@ -1,0 +1,73 @@
+
+
+What's New in CodeTrack v. 0.99.1
+
+
+Bug Fixes
+
+o "Last Update" time/date stamp on home page working now (previously, only reported original
+   bug submission time)
+o Non-administrator password change; redirection is now correct to home
+o Pass-by-reference uses newly recommended cast style (i.e., no more call-time PBR).  See php.net for more info
+  A major change has happened in how pass-by-reference works (99% of the examples in the PHP manual are now deprecated)
+o Proactive checks for username collision
+o $page check fixed on exit logic
+o Links on projects page force preference change for current project
+o MIME negotiation on XML exports for IE allow tree browse view or file download (workaroud to broken IE RFC compliance)
+o Fixed bug where escaped HTML special characters (i.e., "&quot;") were appearing in Excel/CVS/SQL exports
+o Fixed misplaced ; terminator on set_cookie_load_page inside SCRIPT tag (cause ancient browsers to hiccup)
+
+
+New Features
+
+o Configurable GUEST access controls (read only/post only/post+edit)
+o Ability to allow/block access to bug closing/deletes according to role (i.e., QA or Managers only, etc.)
+o Via the wonders of XHTML and CSS, completely skinnable interface
+o Updates for the newest PHP engines (i.e., new default settings for register global scope in php.ini in PHP 4.2+)
+o Dramatically more customizable -- see config.inc.php
+o Major security enhancements and server-side validation and scrubbing
+o Tons of online documentation
+o Full-text searches!
+o Detailed defect Quality Assurance statistics (average lifespan of bugs, change requests, etc.)
+o Lots of usability enhancements (smarter focus, tab order, mouse-less forms, hover on current fields)
+o Pick and choose which columns display on the home page (i.e., "Status", "Summary", "Assign To", etc.)
+o Sortable columns on home and search results
+o Completely modular new directory structure (OC sufferers of the world unite!)
+o Cleaner bug review and audit history screens
+o Project-specific filters on exports (i.e., spreadsheets w/ only your project)
+o Option to display user contact information (i.e., phone numbers and email) to non admins
+o Much richer audit history -- see who did what and when (i.e., review the deleted bug reports log)
+o Enhancements to admin screens:
+    *  Ability to e-mail account notice and login instructions to new users (i.e., password, URL, etc.)
+    *  Administrators can now reset any user password through the GUI
+    *  Automatic suggestions on new user IDs when existing names conflict (i.e., JSMITH and JSMITH2)
+    *  Optional automatic password generation, specify a preferred username format (jsmith, smithj, j, bob)
+o Option to hide user contact information (i.e., phone numbers and email) from non admins
+o New logic to autodetect disabled javascript and cookies, with meaningful advice
+o Redirection and css enhancements allow CodeTrack to still works with Netscape 4.6 (even on Linux!)
+o More friendly for international users (i.e., phone numbers)
+o Screenshots (or any attachment) open in separate window (i.e., no more IE DDE grief)
+
+
+Security Enhancements
+
+o Ability to disable file uploads (i.e., attachments)
+o Increased paranoia settings and filename scrubbing (i.e., no executable .pl, .php attachments)
+o 100% compliant with the new guidance from php.net on global scope for server and php variables
+o Significant server-side sanity checks to prevent corrupted (unintentional or otherwise) data corruption
+   on form posts
+o Configurable location for XML datafiles (including users.xml, equivalent to etc/passwd); can now
+   be moved to non-htdocs space
+o Conversion to XHTML Strict and standards-compliant CSS
+o Lots of semantic updates (i.e., data tables and graphs are structural; no more tag soup)
+
+
+Code Changes
+
+o Complete overhaul on naming conventions (see NAMING_CONVENTIONS.txt) for javascript, form, css, php, and
+   XML variables
+o Major modularization for all routines.  CodeTrack is now a giant case statement and heavily commented
+o 99% reduction in presentational markup -- viva la CSS!
+o All javascript moved to external files
+o Doctype negotiates compliance-mode (no more quirks mode!)
+o Verbose php tags throughout (no longer assumes short tags are valid)

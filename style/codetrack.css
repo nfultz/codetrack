@@ -1,0 +1,341 @@
+
+/******************************************************************************************
+*                                                                                         *
+*  Styles for CodeTrack. Significant inspiration from the good folks at webstandards.org  *
+*  Customize to your heart's content, but don't forget to validate, validate, validate!   *
+*                                                                                         *
+******************************************************************************************/
+
+
+
+/* Most specifiers here are for the benefit of non-modern browsers.  */
+/* Richer version 5+ styles follow in the .w3c sheet */
+
+
+BODY {
+	font-family : Verdana, Arial, sans-serif;
+	font-size : 12px;
+	background-color : #f1f0ed;
+	width : 100%;
+}
+FORM {
+	padding: 0;
+	margin: 0;
+}
+TH {
+	font-family : Verdana, Arial, sans-serif;
+	font-size : 12px;
+	font-weight : normal;
+	color : white;
+	background-color : navy;
+	text-align : center;
+}
+TD {
+	font-family : Verdana, Arial, sans-serif;
+	font-size : 11px;
+	text-align : left;
+}
+INPUT {
+	font-family : Verdana, Arial, sans-serif;
+	font-size : 12px;
+}
+HR {
+	height : 1px;
+	border-style : none;
+	background-color : black;
+}
+#bodyFrame {
+	width : 95%;
+}
+.dataBlock {
+	color : black;
+	background-color : black;
+	border : 1px solid white;
+	width : 100%;
+}
+.dataBlock table {
+	border : 1px solid #f5f3ef;
+}
+.rowOdd {
+	color : black;
+	background-color : #e4e2de;
+}
+.rowEven {
+	color : black;
+	background-color : white;
+}
+.barGraph {
+	color : black;
+	background-color : #e0e0e0;
+	width : 310px;
+	border : 1px solid #c8c8c8;
+}
+.graphTitle {
+	font-family : Verdana, Arial, sans-serif;
+	font-size : 11px;
+	font-weight : bold;
+	margin-top : 30px;
+	text-align : left;
+}
+.barGraph TABLE {
+	color : black;
+	background-color : #e0e0e0;
+}
+.barGraph TH {
+	color : black;
+	background-color : #e0e0e0;
+	font-family : Verdana, Arial, sans-serif;
+	font-size : 10px;
+	text-align : right;
+	padding-right : 5px;
+	width : 36%;
+	border-right : 1px solid black;
+}
+.barGraph TD {
+	text-align : left;
+	font-family : Verdana, Arial, sans-serif;
+	font-size : 10px;
+	padding-right : 5px;
+}
+.graphTotal {
+	color : black;
+	background-color : #ebebd8;
+	font-family : Verdana, Arial, sans-serif;
+	font-size : 10px;
+	text-align : right;
+	padding-right : 5px;
+}
+.graphTotal TD {
+	color : black;
+	background-color : #ebebd8;
+	font-family : Verdana, Arial, sans-serif;
+	font-size : 10px;
+	text-align : left;
+	padding-right : 5px;
+	border-top : 1px solid black;
+	empty-cells : show;
+}
+#navBar {
+	width : 100%;
+	text-align : center;
+	color : blue;
+	font-size : 48px;
+	font-family : monospace;
+}
+#navBar A {
+	color : blue;
+	font-family : Verdana, Arial, sans-serif;
+	font-size : 15px;
+}
+#navBar A:visited {
+	color : blue;
+}
+#navBar #navCurrent {
+	color : red;
+}
+.innerBorderFix {
+	width : 740px;
+	margin-left : auto;
+	margin-right : auto;
+	text-align : center;
+	color : black;
+	background-color : #cdc6bc;
+	border : 1px solid #ebebd8;
+}
+.innerBorderFix TD {
+	border-left : 1px solid gray;
+	border-top : 1px solid gray;
+	border-right : 1px solid white;
+	border-bottom : 1px solid white;
+}
+#login {
+	width : 300px;
+	border : 1px solid black;
+	color : black;
+	margin-top : 50px;
+	background-color : #ebebd8;
+	padding : 0 4px 6px;
+}
+#login INPUT {
+	padding : 5px 2px 5px 0;
+}
+#login H1 {
+	font-family : Verdana, Arial, sans-serif;
+	font-size : 15px;
+	font-weight : normal;
+	text-align : center;
+	color : white;
+	background-color : navy;
+	border : 1px solid #ebebd8;
+	width : 298px;
+	margin : 0;
+	padding : 2px 0;
+}
+#loginForm {
+	width : 300px;
+	margin-left : 35%;
+	margin-bottom : 5px;
+	text-decoration : none;
+}
+.loginLabel {
+	font-family : Verdana, Arial, sans-serif;
+	font-size : 12px;
+	text-align : left;
+	padding : 11px 0 0;
+}
+.loginButton {
+	font-family : Verdana, Arial, sans-serif;
+	font-size : 13px;
+	padding : 0 1px;
+	width : 38px;
+}
+.loginDD {
+	font-family : Verdana, Arial, sans-serif;
+	font-size : 13px;
+}
+.loginMsg {
+	background-color : white;
+	color : black;
+	text-align : center;
+	font-family : Verdana, Arial, sans-serif;
+	font-size : 13px;
+	padding-top : 20px;
+}
+.loginMsg H1 {
+	text-align : center;
+	font-weight : bold;
+	font-family : Verdana, Arial, sans-serif;
+	font-size : 13px;
+	margin : 0;
+	padding : 2px;
+}
+.loginMsg H2 {
+	text-align : center;
+	font-style : italic;
+	font-weight : normal;
+	font-family : Verdana, Arial, sans-serif;
+	font-size : 13px;
+	margin : 0;
+	padding : 2px;
+}
+.cfgProb {
+	width : 350px;
+	border : 1px solid blue;
+	margin-top : 30px;
+	margin-left : auto;
+	margin-right : auto;
+	text-align : center;
+	padding : 8px;
+	color : blue;
+	background-color : #e5e5e5;
+	font-family : Verdana, Arial, sans-serif;
+	font-size : 14px;
+}
+.devResponse {
+	color : red;
+}
+#results th {
+	color : white;
+	text-decoration : none;
+	background-color : #1d5783;
+}
+#resultsTotal {
+	font-family : Verdana, Arial, sans-serif;
+	font-size : 12px;
+	font-weight : bold;
+}
+#resultsFooter {
+	font-family : Verdana, Arial, sans-serif;
+	font-size : 12px;
+	font-style : italic;
+}
+#pageTitle {
+	color : #3a3a3a;
+	font-family : Verdana, Arial, sans-serif;
+	font-size : 15px;
+	font-weight : normal;
+	text-align : center;
+	margin : 20px 0 14px 0;
+	padding : 0;
+}
+#pageTitle A {
+	font-weight : bold;
+}
+#pageTitle A:visited {
+	font-weight : bold;
+}
+.dropDown {
+	font-family : Verdana, Arial, sans-serif;
+	font-size : 11px;
+	margin : 1px;
+}
+#goButton {
+	font-family : Verdana, Arial, sans-serif;
+	font-size : 10px;
+	margin-bottom : 2px;
+	padding : 0;
+}
+.legacyDivider {
+	width : 98%;
+	text-align : center;
+}
+#addEditBugColumn {
+	width : 28%;
+}
+#addEditActionButtons {
+	text-align : center;
+}
+.txtSpecial {
+	color : #666666;
+	font-weight : bold;
+}
+.buttonTiny {
+	color : black;
+	font-family : Verdana, Arial, sans-serif;
+	font-size : 10px;
+	margin : 0;
+	text-decoration : none;
+}
+#bugForm INPUT , #bugForm SELECT , #bugForm TEXTAREA {
+	display : block;
+}
+#bugForm TD {
+	color : black;
+	font-family : Verdana, Arial, sans-serif;
+	font-size : 12px;
+}
+.bugFormGroup {
+	display : inline;
+}
+#bugForm .bugFormGroup INPUT , #bugForm .bugFormGroup SELECT , #bugForm .bugFormGroup TEXTAREA {
+	display : inline;
+}
+.subNav {
+	display : inline;
+}
+.subNav FORM {
+	display : inline;
+}
+.subNavBar {
+	display : inline;
+	text-align : center;
+}
+.subNavBar FORM {
+	display : inline;
+}
+.readOnlyLabel {
+	width : 20%;
+	text-align : right;
+	font-weight : bold;
+}
+.readOnlyData {
+	text-align : left;
+}
+#displayPwd {
+	font-family: monospace;
+	font-size: 14px;
+}
+.cfgChkAccessCSS {
+	display : none;
+	visibility : hidden;
+}

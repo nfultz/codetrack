@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+<!--  Bugs database for CodeTrack.  Edit at your own risk.     -->
+<!--  Meaning: re-check for XML well-formedness and validity!  -->
+<!DOCTYPE bugs SYSTEM "bugs.dtd">
+<bugs>
+	<bug>
+		<ID>0000</ID>
+		<Submit_Time>15-Mar-2004 8:39 PM</Submit_Time>
+		<Project>Test Project</Project>
+		<Module>Navigation bar</Module>
+		<Version>2.6b</Version>
+		<Severity>Serious</Severity>
+		<Summary>Blue Screen on Help Menu</Summary>
+		<Description>On the new navigation screen, clicking on the Help button causes the computer to display the Blue Screen of Death (BSOD), lock up completely, and catch on fire.  User error?</Description>
+		<Tested_Browser>IE 5.5</Tested_Browser>
+		<Browser_Specific>N</Browser_Specific>
+		<Tested_OS>Win2K SP4</Tested_OS>
+		<Submitted_By>System Admin</Submitted_By>
+		<Status>Open</Status>
+		<Assign_To>System Admin</Assign_To>
+		<Attachment>bsod.png</Attachment>
+		<Last_Updated>15-Mar-2004 8:39 PM</Last_Updated>
+	</bug>
+</bugs>

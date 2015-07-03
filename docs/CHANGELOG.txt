@@ -1,0 +1,201 @@
+
+
+   CVS Change Log for CodeTrack v.0.99.3
+
+
+Begin v.99.3
+  ____________
+    Minor release to integrate to v.0.99.2 patch (unset string offsets bug) replacing all
+    all deprecated globals ($HTTP_X_VARS) with their superglobal counterparts($_GET, etc.)
+    for full PHP5 support.
+
+Begin v.99.2
+  ____________
+    This is a minor *patch* to v.0.99.1 to enable CodeTrack to play well with PHP5
+    Minor mods to initializing global xml_array_g() to array, fixes: Fatal error:
+      Cannot unset string offsets in /home/httpd/htdocs/development/codetrack.php on line 2912
+
+Begin v.99.1
+  ____________
+     v.0.99.1 Packaged for release!
+     Working on the first bug boundary condition.  Identified issue in 1-element global
+      array with non-zero index in global variable in parse_xml.  Corrected via
+      temp swap and unset in lieu of array_pop().  New behavior in PHP 4.3+?
+     Implemented self-diagnostic css classes for Apache read configuration
+      problems on style, images, and js directories.
+     Completed configurable GUEST access controls, set via CT_GUESTS_CAN_EDIT
+      and CT_GUESTS_CAN_CREATE.
+     Removed constraint of read-only table on add_edit_bug for guests
+     Fixed minor single-length project array walk bug on search results
+     Added Role and fixed minor typo on new user notification
+     Last minute IE fix for focus on password change and (future-proofing)
+      user maintenance permissions using document.forms[''].elements[''] container
+     Corrected draw_add_edit_bug_form() to make third argument optional
+     Completed access controls to limit close/deleting issues
+      (CT_QA_ENFORCE_PRIVS and CT_QA_WHO_CAN_CLOSE). This is now
+      fully configurable:  Only QA or Admin, not Developers or Managers,
+      etc.  Form controls are grayed out for unauthorized roles.
+     Customizing preferred title is too convoluted on search results.
+     Minor fix to expiration message logic
+      (if timeout via client, code comments more clearly explain logic flow,
+       and client session expiration message is explicit).
+     Final formatting clean-up and updates for documentation prior to v. 0.99.1 freeze
+     W3C validation passes on CSS, and XHTML Strict for all major application screens
+     Nuked orphaned "attach" CSS class
+     Fixed up all top-level page title fonts.  Much purtier..
+     Removed DEFINE reference to CT_TIME_FORMAT (deprecated)
+     Discovered galloping Attach node on new vs. update (invalidates
+      the XML, if the DTD is followed strictly)
+     First attempts to correct out-of-order bugs.dtd
+     Overhauled all js prevalidates and form focus (moved to external js),
+      by properly labeling forms with id, then checking for DOM getElementByID,
+      then returning the form object to existing validations.
+     Broke doc type section out as a single function
+     Passed XHTML Strict for all main pages
+     Commented out phpinfo on debug clauses -- doh!
+     Fixed default project not working on main page (probably lost CSS redesign).
+     Added PHP-side validation for all key form saves
+     Added logic to attempt a cookie-off check (referrer is codetrack.php, but no cookie)
+     noJavascript class genericized to cfgProb
+     CSS fixed width for new/edit bug table (Gecko fix)
+     Stumbled onto the form name=bad, form input name=good,
+      maybe required by XHTML
+     Fixed conflicting name/id on attach field in new/edit form
+     Nuked "attach" CSS
+     First foray into getElementById for all form validation and focus...
+     Removed remaining print-friendly border references everywhere.
+     Moved DEFINES to separate file
+     Reorganized DEFINES (more common ones to top)
+     Fixed visited A nav color bug
+     Fixed client-side (js) password/username checks on login
+     Added MacIE5 check on column sort js
+     Fixed change password validation error (js)
+     Fixed Tools not showing as current
+     Reverted cookie redirects with location rather than META
+      (be kind to ancient NN4, plus REFRESH 0 is deprecating...)
+     More GPL references, including FAQ
+     Fairly major commit update.
+     Fixed off-by-one on first bug generation.
+     Fixed js validation failing on ID-named (versus name-named) form elements.
+     Fixed default focus on all forms screens.
+     Cut down on over-zealous js validation:
+     o Eliminated US-centric phone (client and server)
+     o Username auto-generation is now optional
+     o Password is auto-generation optional
+     o Phone is no longer required
+     o Password minimum length is configurable CT_MIN_PASSWORD_LENGTH
+     Proactive checks for duplicate usernames (accession numbers applied
+      if so).
+     Home page is now sorted by severity (which is more useful
+     than status, given that status=open is the default).
+     Some CSS bling-bling for modern browsers, for form
+     field focus (naturally IE isn't compliant.  Ah well...)
+     Cosmetic touches for forms screens, indicating required fields.
+     Rolled back user access permission options (not working).
+     Admin is 'admin', initial password is 'codetrack'
+     (anyone using this password will be sent to the change password form).
+     On login, do a defacto css check with display: none messages
+     Centered Prev/Next buttons
+     Final polish on CSS - gray box hovers on links, fixed hover on current nav
+     Updated QA statistics
+     Minor mods to report options (emphasized current project)
+     Switched printer friendly to javascript this.print() (CSS will do away with p-friendly)
+     CSS bling, bling (black box hovers on A links)
+     Fixed inconsistent titles on login/main screen
+     Minor fix to HR
+     Prune DTD directory
+     New/Edit Bug form XHTML strict valid, and decent layout.
+     Fixes to MIME downloads.
+     Relocated DTDs so that XML tree in browser works
+     Fixed Today/Yesterday logic problem with timestamp comments.
+     addEdit is valid!  Prev/Next still broken
+     About to update draw_prev_next
+     More de-crapification to add_edit_bug
+     User and project tables still broken. Updating add_edit page.
+     User and project tables still broken.  Scrapped the Gary filter.  One reference remains.  Sanity check.
+     Attempting to fix all-columns-in-filter on table problem.  Broken, but known...
+     Nav buttons rational NN and DOM.
+     Lots of style changes.  Probably F'd something up...
+     Project change method is optionally a traditional GET if onchange is inadequate.
+     Resolved min-height bug with bodyFrame div in IE.
+     Safety check.  TR title for results and pageTitle hover.  Valid
+     Homepage is XHTML Strict valid!!!
+     More CSS integration love.  Nav bar is working, not valid yet...
+     Fixed Opera problem w/ gold boxes on Login (didn't like user_login), added table_sort.js (never added earlier).  Login page is XHTML strict valid.
+     Column sorts and more CSS...  RFS but incomplete.
+     Safely branch prior to ripping.  Initial checkins of bargraph and css data table.
+Begin v.99g (massive presentational overhaul
+  ____________
+     Overhaul of Admin links page, reworded and added all technical documents
+     Updated and verified global scope for these case blocks: audit, editissue, users, projects, changeproject,
+      home, filter, search
+     Enforced proactive admin checks for all admin functions.
+     Updated and verified global scope and for these ADMIN case blocks: dobackup, admin, projectaccess, backup,
+      savepermissions, adduser, addproject, usermaintenance, saveuser, saveproject
+     savebug and searchbug are now saveissue and searchissue
+     Paranoia scrub on $page
+     Export fully functionalized
+     Fixed bug where HTML special characters (i.e., "&quot;") was appearing in Excel/CVS/SQL files
+     Added function reverse_htmlspecialchars()
+     Fixed bug/feature where newlines were embedded in export files.  New constant added CT_NEWLINE_SYMBOL
+     New constant CT_MAX_DESCR_SIZE to remove hard-coded string lengths for issue descriptions
+     savebug (new/updated) issue updated for global scope
+     $existing_submit_time now $original_submit_time
+     Backups function overhauled to allow relative or absolute paths, in Windows or Unix
+     All comments overhauled (saved 15% file size!)
+     Gut check:  28 discreet pages in CodeTrack now!
+     More space formatting decrappification...
+     Admin can now reset anyone's password without knowing it
+     More updates to comply with register global off.  Pain in my ass...
+     Genericized update_password() into update_user(), cleaned up admin logic flow
+     Renamed ambiguous (and confusing) $user_data on login with $user_entry (collided with $user_data on update password)
+     Made all sizeof() variables conform to convention foo_cnt
+     Cleanup to html page literals
+     Explicit $page passed to draw_page_top()
+     Application-wide comprehensive W3C compliance checks/fixes
+     Code formatting fixes (consistent spacing around function body blocks)
+     Simplified page names (search, users, projects)
+     Functionalized full text search
+     Major overhaul to search logic, including brakes for run-away (100+ result) queries, max results is DEFINEd
+     Added field filter on search, allows restricting queries to specific fields such as only developer
+     Added word phrase filter on search, i.e., "blue screen" instead of "blue" or "screen"
+     Fixed incorrect div with span on devResponse highlighting
+     Added missing break on addissue case block
+     Began conversion for non-global scope. Login & home working.
+     Instantiate $page via HTTP_x_VARS (GET AND POST) -- required for out-of-the-box compatibility w/ php 4.2+ php.ini defaults
+     Instantiate $user_login[] array and $failed flag on login page
+     MAX_UPLOAD_FILESIZE set to php.ini default (2MB)
+     Added proactive Javascript-is-enabled check on all pages (noscript tags redirect back to login page)
+     Data scrub for full-text search string $pattern (alphanumeric only)
+     Minor cleanup in drawtable()
+     Complete overhall of all CodeTrack DEFINES (consistent, rational names prepended with CT_)
+     Updated all internal references from "buglist" to "home"
+     Updated all internal references from "newbug" to "newissue"
+     Updated all internal references from "deletedbugs" to "deletedissues"
+     Updated all internal references from "editbug" to "editissue"
+     Updated all links to sync new directory organization
+     Added missing permissions.dtd
+     Corrected non-admin redirect following password change (i.e., non-admins shouldn't get bounced back "Admin" page)
+     Added current user role = admin check on admin page
+     Allow optional default project on login page (allows mouse-free logins)
+     Added CSS class for developer-has-not-responded on home page status (status in red) -- Note: Commit main.css too!
+v.0.99 reorg phase 2
+  ____________
+     Formatting updates on History link on Edit bug page.
+     Merging prep for v.0.99 Beta
+     Functionalized savebug.
+     Parameterized which columns are displayed on the Home page
+     Converted all PHP short tags to explicit long tags, for better compatibility w/ XML
+     De-crappified Abt backwards compatibility (was source of last update time bug on home page)
+     Fixed project drop downs sorted by ID, not Title
+     Added simple full-text search for bug reports with "printer friendly" reports
+     Optional checkbox on add user will e-mail
+     login/password & URL information to new user
+     Fixed home page not displaying true last update time
+     CODETRACK_MAX_UPLOAD_FILE_SIZE increased to same default size as that in php.ini (8MB)
+     Fixed missing $ of page!=logout (now $page!=logout)
+     Added additional browsers (Opera 6.0 and Mozilla 1.0)
+     Fixed misplaced ; terminator on set_cookie_load_page inside SCRIPT tag
+0.99pre1 -- full text search, user creation notification.
+  ____________
+     

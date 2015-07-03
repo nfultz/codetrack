@@ -1,0 +1,123 @@
+
+
+                            CODETRACK NAMING CONVENTIONS EXPLAINED
+
+                                              or
+
+                    "It's not so important to be rational, just consistent!"
+
+
+
+
+        o CodeTrack internal PHP constants (i.e., DEFINEs)
+
+            All caps with CT_ prefix:     if ( sizeof($hits) == CT_MAX_SEARCH_RESULTS ) ...
+
+
+        o CodeTrack internal PHP lookup array constant construction (analagous to SQL static lookup tables)
+
+            Comma-separated list with *no* spaces between entries!
+
+            1) DEFINE ("CT_ACCESS_LEVELS", "Developer,Analyst,QA,Manager,Admin");
+            2) DEFINE ("CT_DEVELOPER_RESPONSES", ",Fixed,Analyzing,As Designed,Enhancement,Duplicate Bug,Not Fixed");
+                                                  ^
+                                                  Note: Null entries are created via "empty" opening comma
+
+
+        o CodeTrack PHP Global variables
+
+            All lowercase, separated by underscores sufficed with _g:  $current_session_g
+
+
+        o CodeTrack PHP function names
+
+            All lowercase, separated by underscores:  FUNCTION save_password( $foo, $bar )
+
+
+        o CodeTrack PHP variables storing array lengths (i.e., sizeof($big_array))
+
+            All lowercase, separated by underscores sufficed with _cnt:   $project_cnt = sizeof($project_table);
+
+
+        o All CodeTrack PHP page names (i.e., destination in main switch case block for $page)
+
+            All lowercase, no separator between words
+
+               1) if ($page == "newuser") ...
+               2) case "savebug":  ...
+
+
+        o PHP internal Boolean constants
+
+            All caps:   $force_attachment = FALSE;
+
+
+        o Apache and PHP built-in variables
+
+            All caps (including array elements) separated by underscores:
+
+               1) $HTTP_SERVER_VARS["REQUEST_METHOD"]
+               2) $page = $HTTP_POST_VARS["page"];
+
+
+        o XML elements or other entities which will "become" XML downstream
+
+            Leading caps, separated by underscores if multi-word
+
+               1) XML entries:  <Password> ... </Password>
+               2) XML Array indexes:  $user_data["Password"],  $project_data["Preferred_Title"]
+               3) HTML variable to become XML:   <input type=text name='user_data[Full_Name]' >
+
+
+        o XML element name exception-to-the-rule
+
+            "ID" is always all-caps when an XML node element:  <ID>0003</ID>
+
+
+        o Non-XML form data variables
+
+            All lowercase separated with underscores:
+
+            1) Inside HTML forms:  <input type=password name="old_pw">
+            2) Once instantiated server-side: $old_pw
+
+
+        o Javascript function names
+
+            Mixed case, no separators:  function validPhone(p) { ... }
+
+
+        o  Style sheet class names
+
+            1) Instantiation as mixed case prepended with a period (duh):    .txtBlack  {  color: black;  }
+            2) HTML reference:  mixed case, explicitly named:    <div class='txtSmall'>
+
+
+        o All HTML markup tags
+
+            Lower case, no exceptions
+
+               1) die("<br><center><h3>Fatal: No user role found!");
+               2) <td class='txtGrey'>Foo</td>
+
+
+        o Static and dynamic URLs
+
+            All lower case.  If multiple variables are passed, separated by the literal "&amp;"
+
+               1) http://server/codetrack.php?page=home&amp;all=1
+               2) <option value="codetrack.php?page=changeproject&amp;redir=home&amp;project=CodeTrack">CodeTrack</option>
+
+            (I know, looks a little goofy compared to the traditional:  some.cgi?x=1&y=2  but the "old school"
+              way won't validate as legal W3C 4.01 HTML.)
+
+
+        o XML database names
+
+            All lower case; the simpler, the better. ("Don't use big words when a diminutive will do!")
+
+               bugs.xml
+               users.xml
+               projects.xml
+               permissions.xml
+

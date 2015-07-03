@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<!--	Project Database for CodeTrack.  Edit at your own risk (read: re-check for well-formedness!) -->
+<projects>
+	<project>
+		<ID>00</ID>
+		<Title>Test Project</Title>
+		<Test_Lead>System Admin</Test_Lead>
+		<Description>Sample project (can be deleted after a real project is set up).</Description>
+		<Project_Type>Web-Based</Project_Type>
+		<Preferred_Title>Developer</Preferred_Title> 
+	</project>
+</projects>

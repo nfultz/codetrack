@@ -1,0 +1,67 @@
+
+
+        The CodeTrack system is comprised of the following files:
+
+
+Application:
+
+ codetrack.php            A monument to both modular programming and extreme recursion!
+ config.inc.php           Customization settings for CodeTrack (options, behaviors, email, etc.)
+
+
+Client-side Validation
+
+ form_validate.js         Global JavaScript library of form validation functions (most .js will call this)
+ bugform_prevalidate.js   Code to set message properties and focus on new/edit bug form
+ login_validate.js        Code to perform missing field checks and focus for login page
+ userform_prevalidate.js  Code to set message properties and focus on new/edit user form
+ table_sort.js            Allows W3C-DOM compliant browsers (all platforms) to sort data tables client-side
+
+
+Documentation
+
+ CHANGELOG.txt             Text log of CVS history to this code base.  Three years in the making...
+ CUSTOMIZING.txt           List of options available in config.inc.php
+ FILES.txt                 You're reading it now.
+ FUNCTIONS.txt             A list of all the functions in CodeTrack, along with input structures
+ GPL_FAQ.html              Frequently Asked Questions about the GNU Public License (GPL).  Excellent resource.
+ help.html                 An first draft of the CodeTrack user manual
+ INSTALL.txt               Procedure for installing CodeTrack in 5 minutes or less
+ LICENSE.txt               The full text of the GNU Public License (GPL)
+ NAMING_CONVENTIONS.txt    A short explanation of the rationale for CodeTrack internal coding conventions
+ TROUBLESHOOTING.txt       Common problems and solutions in installation
+ WHATS_NEW.txt             List of features and bugs fixes new to v.0.99.1
+
+
+Images
+
+ blue.gif                  A 1x5 gif used to render bar plots
+ email.gif                 A little icon for the new/edit issue screen
+
+
+MetaData (used in some export functions)
+
+ bugs.dtd                  XML Document Type Definitions (DTD) for the structure of the bugs datafile
+ users.dtd                 XML DTD for the structure of the users datafile
+ projects.dtd              XML DTD for the structure of the projects datafile
+ permissions.dtd           XML DTD for the structure of the permissions datafile (Experimental)
+
+
+Miscellaneous
+
+  index.html               A redirector to codetrack.php; allows http://servername/codetrack/
+
+
+Presentation
+
+codetrack.css             Cascading Style Sheet for basic presentation (all browsers, including NN4)
+codetrack_w3c.css         Cascading Style Sheet for W3C DOM-compliant (i.e., MacIE5, WinIE6, Mozilla, Opera 7+, etc.)
+
+
+XML Databases
+
+ bugs.xml                  The central bugs table.  Inserts only.
+ users.xml                 The central users table.  Inserts on new users.  All else=updates
+ projects.xml              The central projects table.  Inserts on new projects.  All else=updates.
+ permissions.xml           A bridge table to list user access authorizations.   Heavy DML. (Experimental)
+
