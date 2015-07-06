@@ -804,40 +804,52 @@ FUNCTION bar_graph( $values_array ) {
  if (!isset($values_array))
    die("<br /><br /><pre>Fatal: No values passed to graph array! </pre>");
 
- print "<div class='barGraph'>\n\t<table cellpadding='0' cellspacing='0' border='0' width='100%' summary='Bar Graph'>\n";
 
- $total = array_sum($values_array);
+ print "<table class=table summary='Bar Graph'>\n";
 
- foreach ($values_array as $this_name => $this_value) {
+ # heading
+ print "<tr><th></th>";
+ foreach (array_keys($values_array[array_keys($values_array)[0]]) as $col_name) {
+   $col_total[$col_name] = 0;
+   print "<th class=text-right>$col_name</th>";
 
-  if ($total == 0)
-   $bar_value = " 0.0";  # Avoid division by zero problem
-  else {
-   $bar_value = sprintf("%2.1f", $this_value / $total * 100);
-   if ($bar_value == '100.0')
-    $bar_value='100';
-  }
+ }
+ print "<th class=text-right>Total</th></tr>";
 
-  # Print the bar, but only show image slice if non-zero
+ foreach ($values_array as $row_name => $row_value) {
+  
+   $row_total = 0;
+   print "<tr><th>$row_name</th>";
 
-  print "<tr>\n\t<th>$this_name </th>\n\t<td>";
+   foreach ($row_value as $col_name => $cell) {
 
-  if ( $bar_value != 0 ) {
-   $html_width = (int)ceil($bar_value);  # Never allow WIDTH=0
+      $row_total += $cell;
+      $col_total[$col_name] += $cell;
 
-   print "<img src='images/blue.gif' width='$html_width' height='5' " .
-     "title='$this_value ($bar_value%) $this_name items' alt='Bar Graph' />&nbsp;" ;
-  }
-  print "</td>\n\t<td>$this_value</td>\n\t<td>($bar_value%)</td>\n</tr>\n";
+      # Print the bar, but only show image slice if non-zero
+
+      if ($cell == 0) { print "<td></td>"; } else
+      print "<td class=text-right>$cell</td>";
+
+     }
+
+   print "<td class=text-right>$row_total</td></tr>";
+
+
  }
 
  # Display final total row
+   print "<tr><th>Total</th>";
+   $row_total = 0;
+   foreach ($col_total as $col_name => $cell) {
+      $row_total += $cell;
+      print "<td class=text-right>$cell</td>";
+   }
+   print "<td class=text-right>$row_total</td></tr>";
 
- print "<tr class='graphTotal'>\n\t<th><strong>Total </strong></th>\n\t" .
-   "<td>&nbsp;</td>\n\t" .
-   "<td><strong>$total</strong></td>\n\t" .
-   "<td>(100%)</td>\n</tr>\n" .
-   "</table>\n</div>\n\n";
+
+
+ print  "</table>\n";
 }
 
 
@@ -1720,58 +1732,37 @@ FUNCTION draw_prev_next_buttons( $prev_id, $next_id, &$bug_to_edit, $destination
 
  $id = "{$bug_to_edit['ID']}";  # Force string promotion
 
- if ($prev_id == $id )  {
-  $prev_color  = 'buttonTiny';
-  $prev_widget = 'button';  # Grey non-working button
- }
- else {
-  $prev_color  = 'buttonTiny';
-  $prev_widget = 'submit';
- }
-
- if ($next_id == $id )  {
-  $next_color  = 'buttonTiny';
-  $next_widget = 'button';  # Grey non-working button
- }
- else {
-  $next_color  = 'buttonTiny';  # Should be buttonWhite
-  $next_widget = 'submit';
- }
-
- if (!$extra_buttons)    # zztop not optimal
-  print "<div style='text-align: center;'>\n";
-
-?><div class='subNav'><form action='codetrack.php' method='get'><div class='subNavBar'>
+?><div class='subNav'>
+ <form class=block-inline action='codetrack.php' method='get' style='float:left'>
    <input type='hidden' name='page' value='<?php print $destination_page; ?>' />
    <input type='hidden' name='id'   value='<?php print "$prev_id"; ?>' />
-   <input type='<?php print $prev_widget; ?>' value='&lt; Prev' class='<?php print $prev_color; ?>' />
- </div></form>
+   <input class="btn btn-default" type='submit' value='&lt; Prev' />
+ </form>
 <?php
  if ($extra_buttons) {
   ?>
-  <form action='codetrack.php' method='get'><div class='subNavBar'>
+  <form action='codetrack.php' method='get' style='float:left'>
    <input type='hidden' name='page' value='editissue' />
    <input type='hidden' name='id'   value='<?php print $id; ?>' />
-   <input type='submit' value='  Edit  ' class='buttonTiny' /></div></form>
+   <input class="btn btn-default" type='submit' value='  Edit  ' class='buttonTiny' /></form>
 
-  <form action='codetrack.php' method='get'><div class='subNavBar'>
+  <form action='codetrack.php' method='get' style='float:left'>
    <input type='hidden' name='page' value='audit' />
    <input type='hidden' name='id'   value='<?php print $id; ?>' />
-   <input type='submit' value='History' class='buttonTiny' /></div></form>
+   <input class="btn btn-default" type='submit' value='History' class='buttonTiny' /></form>
   <?php
  }
 
 ?>
- <form action='codetrack.php' method='get'><div class='subNavBar'>
+ <form action='codetrack.php' method='get' style='float:left; clear:right'>
   <input type='hidden' name='page' value='<?php print $destination_page; ?>' />
   <input type='hidden' name='id'   value='<?php print $next_id; ?>' />
-  <input type='<?php print $next_widget; ?>' value='Next &gt;' class='<?php print $next_color; ?>' />
- </div></form></div>
+  <input class="btn btn-default" type='submit' value='Next &gt;' />
+ </form></div>
 <?php
 
- if (!$extra_buttons)  # zztop not optimal
-  print "</div>\n";
 }
+
 
 
 
@@ -2347,10 +2338,11 @@ FUNCTION draw_table( &$data_array, $title, $filter, $project_table='' ) {
 	$bug_severities = explode("," , CT_BUG_SEVERITIES);
 
 	foreach ($bug_statuses as $status)
-			$status_counts[$status] = 0;							# ex. $status_counts["Closed"]
-
 	foreach ($bug_severities as $severity)
-			$severity_counts[$severity] = 0;						# ex. $severity_counts["Fatal"]
+			$status_counts[$severity][$status] = 0;							# ex. $status_counts["Closed"]
+
+
+			#$severity_counts[$severity] = 0;						# ex. $severity_counts["Fatal"]
 
 	if ($debug_g) {
 		print "<pre>"; var_dump($data_array); var_dump($filter); print "</pre>";
@@ -2472,15 +2464,12 @@ FUNCTION draw_table( &$data_array, $title, $filter, $project_table='' ) {
 
 			if ( stristr($title, "issue") ) {
 
-				foreach ($bug_statuses as $status) {
-					if ($data_array[$row]["Status"] == $status)
-						$status_counts[$status]++;									# ex. $status_counts["Closed"]
-				}
+                $status_counts[$data_array[$row]["Severity"]][$data_array[$row]["Status"]]++;									# ex. $status_counts["Closed"]
 
-				foreach ($bug_severities as $severity) {
-					if ($data_array[$row]["Severity"] == $severity)
-						$severity_counts[$severity]++;							# ex. $severity_counts["Fatal"]
-				}
+#				foreach ($bug_severities as $severity) {
+#					if ($data_array[$row]["Severity"] == $severity)
+#						$severity_counts+;							# ex. $severity_counts["Fatal"]
+#				}
 			}
 
 
@@ -2566,10 +2555,7 @@ FUNCTION draw_table( &$data_array, $title, $filter, $project_table='' ) {
 			print "\n<span id='resultsFooter'> (Oldest to newest, by severity. " .
 					"Red status indicates response or comment needed.)</span><br /><br /><br /> \n";
 
-			print "<div class='graphTitle'> Count by Severity </div>\n";
-			bar_graph( $severity_counts );
-
-			print "<div class='graphTitle'> Count by Status </div>\n";
+			print "<h3> Count by Severity and Status </h3>\n";
 			bar_graph( $status_counts );
 
 		}
