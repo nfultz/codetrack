@@ -1562,8 +1562,7 @@ FUNCTION draw_login_page( $project_table, $failed="", $session_expired="", $no_c
 
 ?>
 <form id="loginForm" action="codetrack.php" method="post" onsubmit="return validateLogin(this);" >
-<div id="login">
- <h1>Welcome to CodeTrack</h1>
+ <h2 class="form-signin-heading">Welcome to CodeTrack</h1>
 
  <div class="loginLabel"> Project </div>
  <div class="loginDD">
@@ -1577,17 +1576,15 @@ FUNCTION draw_login_page( $project_table, $failed="", $session_expired="", $no_c
   </select>
  </div>
 
- <div class="loginLabel"> Username </div>
- <input type="text" name="userLogin[username]" value="" />
 
- <div class="loginLabel"> Password </div>
- <input type="password" name="userLogin[password]" value="" />
+ <input type="text" name="userLogin[username]" class="input-block-level" placeholder="Username" />
 
- <div class="loginButton"><input type="submit" value="Login" /></div>
+ <input type="password" name="userLogin[password]" value="" class="input-block-level" placeholder="Password" />
+
+ <button class="btn btn-large btn-primary" type="submit">Sign in</button>
 
  <input name="page" type="hidden" value="login" />
 
-</div>
 </form>
 
 <?php
@@ -1612,7 +1609,7 @@ FUNCTION draw_login_page( $project_table, $failed="", $session_expired="", $no_c
 <div class="cfgChkAccessImg"> If you can see this, there are permission problems on the <em>images</em> directory. </div>
 <div class="cfgChkAccessJs"> If you can see this, there are permission problems on the <em>javascript</em> directory. </div>
 
-</body></html>
+</div></body></html>
 
 <?php
 }
@@ -1635,12 +1632,15 @@ FUNCTION draw_page_header() {
  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
  <meta http-equiv="Refresh" content="<?php print CT_DEFAULT_PAGE_TIMEOUT ; ?>;URL=codetrack.php?page=timeout" />
  <title>CodeTrack: Bug and Defect Reporting <?php print CT_CODE_VERSION; ?> </title>
- <link rel="stylesheet" href="style/codetrack.css" type="text/css" />
+ <!--link rel="stylesheet" href="style/codetrack.css" type="text/css" /-->
  <link rel="stylesheet" href="images/cfgChkAccess.css" type="text/css" />
  <link rel="stylesheet" href="javascript/cfgChkAccess.css" type="text/css" />
- <link rel="stylesheet" href="style/codetrack_w3c.css" type="text/css" media="all" />
+ <!--link rel="stylesheet" href="style/codetrack_w3c.css" type="text/css" media="all" /-->
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
  </head>
  <body>
+ <div class='container'>
 
 <?php
 }
