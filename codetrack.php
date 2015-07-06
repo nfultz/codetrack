@@ -1438,9 +1438,8 @@ FUNCTION draw_add_edit_bug_form( $project_table, $user_table, $bug_id="" ) {
 
  if ( CT_ENABLE_EMAIL ) {
 
-  print "<label title='Send an email to the Assignee'><input type='checkbox' name='send_mail' value='1' /><img ".
-    "src='images/email.gif' \n\t\t onclick='send_mail.checked=!send_mail.checked' ".
-    "alt='email' /></label> \n";
+  print "<label title='Send an email to the Assignee'><input type='checkbox' name='send_mail' value='1' />".
+    "&#x2709;</label> \n";
 
   print "<label title='Send an email to these people too'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cc: ";
   print "<select name='cc_list[]' multiple='multiple' size='3'>";
