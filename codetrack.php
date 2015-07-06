@@ -195,7 +195,7 @@ switch ($page) {
 
    $index = "";
 
-   if ( valid_password($user_login, $user_table, &$index) ) {
+   if ( valid_password($user_login, $user_table, $index) ) {
 
     # If matched, user index is passed back by reference
 
@@ -272,7 +272,7 @@ switch ($page) {
 
  case "changepassword":
   draw_page_top( $page );
-  draw_change_password_form( &$user_table );
+  draw_change_password_form( $user_table );
   draw_page_bottom();
  break;
 
@@ -391,7 +391,7 @@ switch ($page) {
   draw_page_top( $page );
   parse_xml_file( CT_XML_BUGS_FILE, CT_DROP_HISTORY, "ID", CT_ASCENDING );
   $bug_table = &$xml_array_g;      # Copy by reference, so don't call parse_xml_file again
-  print_deleted_bugs( &$bug_table );
+  print_deleted_bugs( $bug_table );
   draw_page_bottom();
 
  break;
@@ -413,7 +413,7 @@ switch ($page) {
   $data_array = &$xml_array_g;
 
   draw_page_top( $page );
-  print_audit_trail(&$data_array, "$id");  # Force string promotion on id
+  print_audit_trail($data_array, "$id");  # Force string promotion on id
   draw_page_bottom();
 
  break;
@@ -774,7 +774,7 @@ FUNCTION append_xml_file_node( $filename, $node, $closing_root_tag ) {
 
 
 
-FUNCTION authorized_user( $project_id, $user_id, $permission_table ) {
+FUNCTION authorized_user( $project_id, $user_id, &$permission_table ) {
 
  # print "<pre>"; var_dump($permission_table);
  # print "PI: $project_id UI: $user_id " ;  print "</pre>";
@@ -913,7 +913,7 @@ FUNCTION build_updated_session_cookie( $project_name, $current_session ) {
 
 
 
-FUNCTION calc_next_node_id( $node_list ) {
+FUNCTION calc_next_node_id( &$node_list ) {
 
  $max_id = 0;
  $node_list_cnt = sizeof($node_list);
@@ -1854,7 +1854,7 @@ FUNCTION draw_project_access_form( $project_table, $user_table, $permission_tabl
    $widget_type = 'checkbox';
    $extra = '';
 
-   if ( authorized_user( $this_project_id, $user["ID"], &$permission_table ) )
+   if ( authorized_user( $this_project_id, $user["ID"], $permission_table ) )
     $checked = ' checked="checked" ';        # If user is listed, they've already got access
   }
 
@@ -2030,7 +2030,7 @@ FUNCTION draw_reports_page( $project_table, $user_table ) {
 
 
 
-FUNCTION draw_change_password_form( $user_table ) {
+FUNCTION draw_change_password_form( &$user_table ) {
 
 	GLOBAL $current_session_g, $debug_g;
 
@@ -2953,7 +2953,7 @@ FUNCTION parse_xml_file( $xml_filename, $drop_history=FALSE, $sort_element='', $
 
 
 
-FUNCTION print_audit_trail( $data_array, $id ) {
+FUNCTION print_audit_trail( &$data_array, $id ) {
 
   $row_cnt = sizeof($data_array);   # Yes, this is correct; need original # of rows
 
@@ -3031,7 +3031,7 @@ FUNCTION print_audit_trail( $data_array, $id ) {
 
 
 
-FUNCTION print_deleted_bugs( $bug_table ) {
+FUNCTION print_deleted_bugs( &$bug_table ) {
 
 	usort($bug_table, create_function('$a,$b',
 		'return strcasecmp($a["Project"].$a["ID"],$b["Project"].$b["ID"]);'));
@@ -3158,7 +3158,7 @@ FUNCTION reverse_htmlspecialchars ( $html_encoded_string ) {
 
 
 
-FUNCTION rewrite_xml_file( $filename, $parsed_tree, $major_element_tag ) {
+FUNCTION rewrite_xml_file( $filename, &$parsed_tree, $major_element_tag ) {
 
 
 	#	Take a pre-parsed xml tree (table), and create or rebuild an existing file
@@ -3298,7 +3298,7 @@ FUNCTION save_bug_data( $id='', $raw_bug_data, $attachment_data='', $original_su
 	if ( $id )
 		$this_is_new_bug = FALSE;
 	else {
-		$id = calc_next_node_id ( &$bug_table );
+		$id = calc_next_node_id ( $bug_table );
 		$this_is_new_bug = TRUE;
 	}
 	$ID = sprintf("<ID>%04d</ID>", $id);
@@ -3511,7 +3511,7 @@ FUNCTION save_permission_data( $permission_data, $permission_table, $project_tab
 
 	#	Save it, pass big data by reference
 
-	rewrite_xml_file ( CT_XML_PERMISSIONS_FILE, &$permission_tree, "permission" );
+	rewrite_xml_file ( CT_XML_PERMISSIONS_FILE, $permission_tree, "permission" );
 
 	print "<center><br /><br /><br /><div class='txtSmall'>Project permissions successfully saved.<br />\n".
 			"<form method=get action=codetrack.php><input type=hidden name='page' value='adminLinks'>\n".
@@ -3895,12 +3895,12 @@ FUNCTION update_xml_file_node( $filename, $parsed_tree, $major_element_tag, $upd
 
 	#	Save it, pass big data by reference
 
-	rewrite_xml_file( $filename, &$parsed_tree, $major_element_tag );
+	rewrite_xml_file( $filename, $parsed_tree, $major_element_tag );
 }
 
 
 
-FUNCTION valid_password( $login_data, $user_table, $user_index ) {
+FUNCTION valid_password( $login_data, $user_table, &$user_index ) {
 
 	#	If username is matched, and password is correct, user index is passed back by reference
 
