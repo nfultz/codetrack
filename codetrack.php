@@ -950,9 +950,9 @@ FUNCTION create_summary( &$project_table ) {
 
  # Present executive summary of all issues.  Project table is passed by reference
 
- print "\n<br /><br /><div id='pageTitle'>Quality Assurance Executive Summary: <strong>" .
-   $current_session_g['project'] . "</strong> Activity for past 30 days</div><center><br />" .
-   "<table border=0 width=300 cellpadding=3 cellspacing=2>\n";
+ print "\n<br /><br /><h2>Quality Assurance Executive Summary: <strong>" .
+   $current_session_g['project'] . "</strong> Activity for past 30 days</h2><center><br />" .
+   "<table class=table>\n";
 
  parse_xml_file( CT_XML_BUGS_FILE, CT_DROP_HISTORY, "PROJECT", CT_ASCENDING );
  $bug_table = &$xml_array_g;      # Copy by reference, so don't call parse_xml_file again
@@ -1108,8 +1108,8 @@ FUNCTION draw_add_edit_bug_form( $project_table, $user_table, $bug_id="" ) {
   $index = get_array_index_for_id( $bug_array, "$bug_id" );
   $bug_to_edit = $bug_array[$index] ;
 
-  print "<div id='pageTitle'> Edit  " . $current_session_g['project'] . " Issue " .
-   "<a href='codetrack.php?page=viewissue&amp;id=$bug_id'>$bug_id</a></div>\n";
+  print "<h2> Edit  " . $current_session_g['project'] . " Issue " .
+   "<a href='codetrack.php?page=viewissue&amp;id=$bug_id'>$bug_id</a></h2>\n";
 
   $prev_id = get_prev_bug_id( $bug_array, $index );
   $next_id = get_next_bug_id( $bug_array, $index );
@@ -1117,7 +1117,7 @@ FUNCTION draw_add_edit_bug_form( $project_table, $user_table, $bug_id="" ) {
 
  }
  else
-  print "\n\n<div id='pageTitle'> Report a New Issue for {$current_session_g['project']} </div>\n";
+  print "\n\n<h2> Report a New Issue for {$current_session_g['project']} </h2>\n";
 ?>
 
  <form enctype="multipart/form-data" id="bF" action="codetrack.php" method="post"
@@ -1130,7 +1130,7 @@ FUNCTION draw_add_edit_bug_form( $project_table, $user_table, $bug_id="" ) {
  <?php if ($debug_g) print '<input name="debug" type="hidden" value="1" />'; ?>
 
  <div class="innerBorderFix">
- <table cellpadding="5" cellspacing="4" border="1" width="100%" summary="Issue Report">
+ <table class=table summary="Issue Report">
 <?php
 
  if ( $bug_to_edit ) {
@@ -1477,7 +1477,7 @@ FUNCTION draw_add_edit_bug_form( $project_table, $user_table, $bug_id="" ) {
 FUNCTION draw_admin_page() {
 
 ?>
- <div id='pageTitle'> Administrator Tools </div><br />
+ <h2>Administrator Tools</h2>
  <div style='margin-left: 20%; margin-top: 0px; margin-bottom: 0px;'>
  <hr width='80%' class="hrBlack" align="left">
   Maintenance
@@ -1517,7 +1517,7 @@ FUNCTION draw_admin_page() {
 FUNCTION draw_export_options( $current_project ) {
 
  ?>
- <div id='pageTitle'> Data Export Wizard </div><br />
+ <h2> Data Export Wizard </h2><br />
  <form action='codetrack.php' method=POST>
  <div style='font-family: verdana, sans-serif; font-size: 10pt;'>
  <div style='margin-left: 15%; margin-top: 0px; margin-bottom: 0px;'>
@@ -1666,35 +1666,45 @@ FUNCTION draw_page_top( $this_page ) {
 ?>
 <div id="bodyFrame">
 
-<div id="navBar">
- <a href='codetrack.php?page=home' title='Summary of your current project'
- <?php if ($this_page=='home') print ' id="navCurrent"'; ?>>Home</a>
+<ul class="nav nav-tabs">
+ <li role=presentation<?php if ($this_page=='home') print ' class=active'; ?>>
+ <a href='codetrack.php?page=home' title='Summary of your current project'>Home</a>
+  </li>
 
- <a href='codetrack.php?page=newIssue' title='Create a new defect report or Change Request'
- <?php if ($this_page=='newIssue') print ' id="navCurrent"'; ?>>New Issue</a>
+ <li role=presentation<?php if ($this_page=='newIssue') print ' class=active'; ?>>
+ <a href='codetrack.php?page=newIssue' title='Create a new defect report or Change Request' >New Issue</a>
+  </li>
 
- <a href='codetrack.php?page=reports' title='Create simple and advanced reports'
- <?php if ($this_page=='reports') print ' id="navCurrent"'; ?>>Reports</a>
+ <li role=presentation<?php if ($this_page=='reports') print ' class=active'; ?>>
+ <a href='codetrack.php?page=reports' title='Create simple and advanced reports' >Reports</a>
+  </li>
 
- <a href='codetrack.php?page=projects' title='List of active projects'
- <?php if ($this_page=='projects') print ' id="navCurrent"'; ?>>Projects</a>
+ <li role=presentation<?php if ($this_page=='projects') print ' class=active'; ?>>
+ <a href='codetrack.php?page=projects' title='List of active projects' >Projects</a>
+ </li>
 
+ <li role=presentation<?php if ($this_page =='adminLinks' || $this_page == 'tools') print ' class=active'?>>
 <?php
  if ( $current_session_g["role"] == "Admin" )
-  print "\t<a href='codetrack.php?page=adminLinks' " . (($this_page=='adminLinks') ? 'id="navCurrent" ' : '' ).
-    "title='CodeTrack Administration and Setup'>Admin</a> \n\n";
+  print "\t<a href='codetrack.php?page=adminLinks' title='CodeTrack Administration and Setup'>Admin</a> \n\n";
  else
-  print "\t<a href='codetrack.php?page=tools' " . (($this_page=='tools') ? 'id="navCurrent" ' : '' ).
-    "title='CodeTrack system tools'>Tools</a> \n\n";
+  print "\t<a href='codetrack.php?page=tools'title='CodeTrack system tools'>Tools</a> \n\n";
 ?>
+ </li>
+
+ <li role=presentation>
  <a href="javascript: this.print();" title="Printer friendly version of this page">Print</a>
+ </li>
 
+ <li role=presentation>
  <a href="docs/help.html#home" title="Need help with this (or any) screen?" onclick='this.target="_blank";'>Help</a>
+ </li>
 
+ <li role=presentation>
  <a href="codetrack.php?page=logout&amp;origin=user" title="Log off the CodeTrack System">Logout</a>
-</div>
+ </li>
+</ul>
 
-<hr class="legacyDivider" />
 
 <noscript>
  <div class="cfgProb"> CodeTrack is pretty broken without Javascript. Please turn it back on. </div>
@@ -1815,7 +1825,7 @@ FUNCTION draw_project_access_form( $project_table, $user_table, $permission_tabl
 
  print '<script type="text/javascript" src="javascript/form_validate.js"> </script>';
 
- print "<div id='pageTitle'> Select Authorized Users for: &nbsp;$current_project </div><br />\n";
+ print "<h2> Select Authorized Users for: &nbsp;$current_project </h2><br />\n";
  draw_project_hotlist_widget($project_table, $current_project, "projectaccess");
 
  for ($i=0; $i < sizeof($project_table); $i++) {
@@ -1831,7 +1841,7 @@ FUNCTION draw_project_access_form( $project_table, $user_table, $permission_tabl
 <form id="maintenance" action="codetrack.php" method="POST" style="margin-top: 0px; margin-left:0; margin-bottom: 0px;">
  <input type="hidden" name="page" value="savepermissions">
  <input type="hidden" name="permission_data[Project_ID]" value="<?php print $this_project_id; ?>" >
- <table cellspacing=0 cellpadding=0 border=1 style="margin-top: 0px; margin-left:0; margin-bottom: 5px;" summary="Permissions">
+ <table class=table summary="Permissions">
  <tr class='rowHeader'>
   <td style='text-align: center;' width='10'><input type=checkbox name=toggleBoxes onClick='toggle_checkboxes(document.forms["maintenance"]);'></td>
   <td style='text-align: left;'><strong> Authorized User &nbsp;&nbsp;</strong></td>
@@ -1877,7 +1887,7 @@ FUNCTION draw_project_access_form( $project_table, $user_table, $permission_tabl
 
 FUNCTION draw_read_only_table( $data_table ) {
 
- print "\n<table border='1' cellspacing='1' cellpadding='3' width='600' summary='Read-only data table'>\n";
+ print "\n<table class=table summary='Read-only data table'>\n";
 
  $rowcnt = 0;
 
@@ -1903,7 +1913,7 @@ FUNCTION draw_reports_page( $project_table, $user_table ) {
  $current_project = $current_session_g["project"];
  $user_full_name  = $current_session_g["user_full_name"];
  ?>
- <div id='pageTitle'> Search and Reports Wizard </div>
+ <h2> Search and Reports Wizard </h2>
  <div style='margin-left: 10%;'>
  <hr width='80%' class="hrBlack" align="left">
 
@@ -1940,7 +1950,7 @@ FUNCTION draw_reports_page( $project_table, $user_table ) {
 
  <div style='margin-left: 3%; margin-top: 0px; margin-bottom: 0px;'>
  <form action="codetrack.php" method="get"> <!-- Need to GET not POST for rational back behavior -->
- <table border=0 summary="">
+ <table class=table summary="">
   <tr class='txtSmall'>
    <td>Project</td>
    <td>Severity</td>
@@ -2200,7 +2210,7 @@ FUNCTION draw_project_maintenance_form( $user_table ) {
 
 	<form id="projectForm" action="codetrack.php" method="POST" onSubmit="return checkMissing(this);" >
 
-	<table border=2 cellpadding=7 cellspacing=0 bgcolor="#E4E2DF" summary="Project Maintenance">
+	<table class=table summary="Project Maintenance">
 		<tr>
 			<td class='txtSmall'>Project Title <em>(One or Two Words, or an acronym) </em><br />
 				<input name="page" type="hidden" value="saveproject">
@@ -2272,7 +2282,7 @@ FUNCTION draw_view_bug_page( $bug_id ) {
 	$index = get_array_index_for_id( $bug_array, "$bug_id" );
 	$bug_to_edit = $bug_array[$index] ;
 
-	print "\n\t<div id='pageTitle'> Issue # $bug_id </div><br />\n";
+	print "\n\t<h2> Issue # $bug_id </h2><br />\n";
 
 	$prev_id = get_prev_bug_id( $bug_array, $index );
 	$next_id = get_next_bug_id( $bug_array, $index );
@@ -2351,7 +2361,7 @@ FUNCTION draw_table( &$data_array, $title, $filter, $project_table='' ) {
 		die("Fatal: Draw table passed no data array or title!");
 
 	print '<script type="text/javascript" src="javascript/table_sort.js"> </script>';
-	print "\n\n<div id='pageTitle'>$title</div><br />\n";
+	print "\n\n<h2>$title</h2>\n";
 
 	$row_cnt = sizeof($data_array);  # This is correct; We need original size.
 
@@ -2387,7 +2397,7 @@ FUNCTION draw_table( &$data_array, $title, $filter, $project_table='' ) {
 	#	Build Generic Summary Table
 
 	print "<div class='dataBlock'>\n";
-	print "<table id='results' cellspacing='1' border='0' width='100%' summary='Data Table'>\n";
+	print "<table id='results' class=table summary='Data Table'>\n";
 	print "<thead>\n\t<tr title='Click on column name to sort'>\n";
 
 	$hdr_cnt = 0;
@@ -3043,7 +3053,7 @@ FUNCTION print_deleted_bugs( &$bug_table ) {
 	?>
 		<center>
 		<div class='txtSmall'><br /><b>Deleted Reports by Project</b><br /><br /><br /></div>
-		<table border=1 cellpadding=2 cellspacing=0 summary="Deleted Issues List">
+		<table class=table spacing=0 summary="Deleted Issues List">
 		<tr class='rowOdd'><th>ID</th><th>Project</th><th>Original Author</th>
 		<th>Submit Time</th><th>Summary</th><th>Deleted On</th><th>Deleted By</th></tr>
 	<?php
@@ -3212,7 +3222,7 @@ FUNCTION rewrite_xml_file( $filename, &$parsed_tree, $major_element_tag ) {
 FUNCTION draw_tools_page() {
 
 ?>
-	<div id='pageTitle'> System Tools </div><br />
+	<h2> System Tools </h2><br />
 	<div style='margin-left: 10%;'>
 	<hr width='80%' class="hrBlack" align="left">
 		<ul>
@@ -3534,7 +3544,7 @@ FUNCTION save_project_data( $project_data, $project_table ) {
 	if (	!$project_data["Title"] or !$project_data["Description"] )
 		die("<br /><h3><center>Fatal:  Vital form data for create project not received (Title or Description)!");
 
-	print "\n\n<br /><br /><br />\n<center><table border=0 cellpadding=3 cellspacing=0 summary='Project Maintenance'>\n";
+	print "\n\n<br /><br /><br />\n<center><table class=table summary='Project Maintenance'>\n";
 	print "<tr><td colspan=2 class='newUserSummaryTitle'>" .
 			" &nbsp; New Project Summary<br />&nbsp;</td></tr>\n\n";
 
@@ -3642,7 +3652,7 @@ FUNCTION save_user_data( $user_data, $user_table, $notify_user='', $apache_vars 
 	if ( $debug_g )
 		print "<br /><b>Passed Reg-Ep cleaning in save_user_data</b><br />";
 
-	print "\n\n<br /><br /><br />\n<center><table border=0 cellpadding=3 cellspacing=0 summary='New User Confirmation'>\n";
+	print "\n\n<br /><br /><br />\n<center><table class=table summary='New User Confirmation'>\n";
 	print "<tr><td colspan=2 class='newUserSummaryTitle'>" .
 			" &nbsp; New User Summary<br />&nbsp;</td></tr>\n\n";
 
