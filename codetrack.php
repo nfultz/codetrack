@@ -1125,28 +1125,27 @@ FUNCTION draw_add_edit_bug_form( $project_table, $user_table, $bug_id="" ) {
 
   $prev_id = get_prev_bug_id( $bug_array, $index );
   $next_id = get_next_bug_id( $bug_array, $index );
-  draw_prev_next_buttons( "$prev_id", "$next_id", $bug_to_edit, "editissue" );
+  #draw_prev_next_buttons( "$prev_id", "$next_id", $bug_to_edit, "editissue" );
 
  }
  else
   print "\n\n<h2> Report a New Issue for {$current_session_g['project']} </h2>\n";
 ?>
 
+<hr/>
  <form enctype="multipart/form-data" id="bF" action="codetrack.php" method="post"
-  onsubmit="return checkMissing(this);" >
- <div id="bugForm">
+  onsubmit="return checkMissing(this);" class='form-horizontal'>
 
  <input name="MAX_FILE_SIZE" type="hidden" value="<?php print CT_MAX_UPLOAD_FILE_SIZE ; ?>" />
  <input name="page" type="hidden" value="saveissue" />
 
  <?php if ($debug_g) print '<input name="debug" type="hidden" value="1" />'; ?>
 
- <div class="innerBorderFix">
- <table class=table summary="Issue Report">
 <?php
 
  if ( $bug_to_edit ) {
 
+  print "<p class=help-block>";
   if ( isset( $bug_to_edit["Updated_By"] ) )
    $msg = "Last updated ";
   else {
@@ -1155,11 +1154,20 @@ FUNCTION draw_add_edit_bug_form( $project_table, $user_table, $bug_id="" ) {
   }
   $msg .=  $bug_to_edit['Last_Updated'] . " by " . $bug_to_edit["Updated_By"] ;
 
-  print "\n\t<tr><td colspan='3'> $msg " .
-    "<a href='codetrack.php?page=audit&amp;id={$bug_to_edit['ID']}'>[History]</a></td></tr>\n";
+  print "\n\t $msg " .
+    "<a href='codetrack.php?page=audit&amp;id={$bug_to_edit['ID']}'>[History]</a>\n";
+  print "</p>";
  }
+?>
 
- print "\t<tr><td id='addEditBugColumn'>\n\n\tProject\n\t<select name='bug_data[Project]'>";
+
+
+
+ <div class=form-group>
+ <label class="col-sm-2 control-label"> Project</label>
+ <div class="col-sm-2" ><select class=form-control name='bug_data[Project]'>
+
+<?php
 
  if ($bug_to_edit)
   $p = $bug_to_edit["Project"];
@@ -1176,27 +1184,31 @@ FUNCTION draw_add_edit_bug_form( $project_table, $user_table, $bug_id="" ) {
 
   print ">" . $project_table[$i]["Title"] . "</option>" ;
  }
- print "\n\t</select></td>\n\n";
 ?>
- <td>Module or Screen Name
- <input name="bug_data[Module]" type="text" size="25" maxlength="25" <?php
+ </select></div>
+
+
+
+
+
+
+ <label class="col-sm-2 control-label">Module</label>
+ <div class=col-sm-2><input class=form-control name="bug_data[Module]" type="text" size="25" maxlength="25" <?php
 
  # HTML-escape single quotes
 
  if ($bug_to_edit)
   print " value='" . ereg_replace( "'", "&#039", $bug_to_edit["Module"] ) . "' ";
 
-?> /></td>
- <td>Version
- <input name="bug_data[Version]" type="text" size="10" maxlength="12" <?php
-  if ($bug_to_edit)
-   print " value='" . ereg_replace( "'", "&#039", $bug_to_edit["Version"] ) . "' ";
-?> /></td>
- </tr>
- <tr>
+?> /></div></div>
 
- <td>Severity*
- <select name='bug_data[Severity]'><?php
+ 
+ 
+
+ <div class=form-group>
+ <label class='control-label col-sm-2'>Severity*</label>
+ <div class=col-sm-2>
+ <select class=form-control name='bug_data[Severity]'><?php
 
    print "\n\t\t<option value=''></option>";
 
@@ -1209,157 +1221,36 @@ FUNCTION draw_add_edit_bug_form( $project_table, $user_table, $bug_id="" ) {
    }
 ?>
 
- </select>
- </td>
-
- <td colspan="2"><em>Brief</em> Summary of Problem*
- <input name="bug_data[Summary]" type="text" size="40" maxlength="55" <?php
+ </select></div>
+ 
+ <label class='col-sm-2 control-label'>Version</label>
+  <div class=col-sm-2>
+ <input class=form-control name="bug_data[Version]" type="text" size="10" maxlength="12" <?php
   if ($bug_to_edit)
-   print " value='" . ereg_replace( "'", "&#039", $bug_to_edit["Summary"] ) . "' ";
-?> /></td>
-  </tr>
-  <tr>
-   <td colspan="3">Full Description*<em> (the more details the better!)</em>
-   <textarea name="bug_data[Description]" rows="7" cols="50" <?php
+   print " value='" . ereg_replace( "'", "&#039", $bug_to_edit["Version"] ) . "' ";
+?> /></div>
 
-   print " " . CT_OPTIONAL_UGLY_NN4_HACK . " \n>";
-
-   if ($bug_to_edit)
-    print $bug_to_edit["Description"];
-
-?></textarea></td>
-  </tr>
-  <tr>
-
-   <td colspan="<?php
-
-    if ($bug_to_edit)
-     print '2">Attachment: ';
-    else
-     print '3">Attachment <em>(screen print, data file, etc.)</em>';
+ </div>
 
 
-    if ( isset($bug_to_edit["Attachment"]) ) {
-      print "&nbsp;<span class='txtSpecial'>" .
-        "<a href='attachments/" . $bug_to_edit["Attachment"] . "' " .
-        "onclick=\"this.target='_blank';\" >" .
-        $bug_to_edit["Attachment"] . "</a></span>".
-        "<input name='bug_data[Attachment]' type='hidden' value='".
-        $bug_to_edit["Attachment"] . "' />";
-    }
-    else {
-     print "<input name='Attachment' type='file' size='40' />\n";
-    }
-
-   ?>
-
-   </td>
-  <?php if ($bug_to_edit) {
-
-    # A little complicated: If [some user role] is explictly blocked, and this user is not in that category...
-
-    if ( (CT_QA_ENFORCE_PRIVS) and ( !in_array($current_session_g["role"], explode(',' , CT_QA_WHO_CAN_CLOSE))) ) {
-     print "\n<td><span class='txtSpecial'> [ ] </span> Delete Report </td>";
-    }
-    else {
-     print "\n<td><span class='bugFormGroup'>" .
-       "\n<input type='checkbox' name='bug_data[Delete_Bug]' value='Y' " .
-       "onclick='if (this.checked) " .
-       "return confirm(\"Checking the Delete box will permanently erase this report." .
-       '\nIf you really want to delete this report, click OK then press Save. ' .
-       '\nTo simply close the issue, cancel now and change the Status category.' .
-       "\");' />&nbsp; Delete Report </span></td>";
-    }
-   }
-  ?>
-
-  </tr>
-
- <?php
-
- if ( $this_project["Project_Type"] == "Web-Based" )
-
-  {
-
- ?>
-
-  <tr>
-  <td colspan='2'>
-   Tested Browser  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Browser-Specific? <br />
-   <span class='bugFormGroup'>
-   <select name='bug_data[Tested_Browser]'>
+ 
 <?php
-   foreach ($browser_name as $browser) {
-
-    if ( ($bug_to_edit["Tested_Browser"] == $browser) or
-     (!$bug_to_edit and $browser == CT_DEFAULT_BROWSER) )
-      print "\t\t\t\t<option value='$browser' selected='selected'>$browser</option>\n";
-    else
-     print "\t\t\t\t<option value='$browser'>$browser</option>\n";
-   }
-?>
-   </select>
-
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-   <input type='radio' name='bug_data[Browser_Specific]' value='Y'
-<?php if ($bug_to_edit["Browser_Specific"] == 'Y') print " checked='checked' "; ?> />Y &nbsp;
-   <input type='radio' name='bug_data[Browser_Specific]' value='N'
-<?php if ($bug_to_edit["Browser_Specific"] == 'N') print " checked='checked' "; ?> />N &nbsp;
-   <input type='radio' name='bug_data[Browser_Specific]' value=''
-<?php if ($bug_to_edit["Browser_Specific"] == '')
- print " checked='checked' ";
-  else if (!$bug_to_edit)
- print " checked='checked' ";
-?> />D/K
-   </span>
-  </td>
-  <td>
-   Tested OS
-   <select name='bug_data[Tested_OS]'>
-<?php
-   foreach ($OS_name as $OS) {
-
-    if ( (!$bug_to_edit and $OS == CT_DEFAULT_OS) or
-     ($bug_to_edit["Tested_OS"] == $OS) )
-     print "<option value='$OS' selected='selected'>$OS</option> \n";
-    else
-     print "<option value='$OS'>$OS</option> \n";
-   }
-?>
-
-  </select>
-  </td>
- </tr>
-
-<?php
-
- }  # End of Web-Based Project Check
+   $submitter = $bug_to_edit ?  $bug_to_edit["Submitted_By"] :  $current_session_g["user_full_name"];
 
 ?>
+ <div class=form-group>
+  <label class='col-sm-2 control-label'> Submitted By</label>
+  <div class='col-sm-2'>  <p  class=form-control-static> <?php print $submitter; ?></p>
+ <input name='bug_data[Submitted_By]' type='hidden' value='<?php print $submitter; ?>' /> 
+  </div>
 
- <tr>
-  <td>
-<?php
-  if ($bug_to_edit)
-   $submitter = $bug_to_edit["Submitted_By"];
-  else
-   $submitter = $current_session_g["user_full_name"];
 
-  print "Submitted By <div class='txtSpecial'> &nbsp;&nbsp;" .
-    $submitter .
-    " &nbsp;</div>" .
-    "<input name='bug_data[Submitted_By]' type='hidden' value='" .
-    $submitter . "' />";
-?>
-  </td>
-  <td><div id="addEditActionButtons" class="bugFormGroup">
-    <input type='submit' value=' Save ' />
-    <input type='button' value='Cancel' onclick="location.replace('codetrack.php?page=home');" />
-    <input type='reset' value=' Undo ' />
-  </div></td>
 
-  <td>
+
+
+
+  <label class='col-sm-2 control-label'>Status</label>
+     <div class='col-sm-2'>  
 <?php
   if ($bug_to_edit) {
 
@@ -1367,11 +1258,11 @@ FUNCTION draw_add_edit_bug_form( $project_table, $user_table, $bug_id="" ) {
 
    if ( (CT_QA_ENFORCE_PRIVS) and ( !in_array($current_session_g["role"], explode(',' , CT_QA_WHO_CAN_CLOSE))) ) {
 
-    print "Status: <div class='txtSpecial'>&nbsp; " . $bug_to_edit["Status"]  . "</div>" .
+    print "<p class='form-control-static'> " . $bug_to_edit["Status"]  . "</p>" .
       "<input name='bug_data[Status]' type='hidden' value='" . $bug_to_edit["Status"] . "' />\n";
    }
    else {
-    print "Status\n<select name='bug_data[Status]'>\n";
+    print "<select name='bug_data[Status]' class=form-control>\n";
 
     foreach ($bug_status as $status) {
 
@@ -1386,21 +1277,188 @@ FUNCTION draw_add_edit_bug_form( $project_table, $user_table, $bug_id="" ) {
    }
   }
   else
-   print "Status: <div class='txtSpecial'>&nbsp; Open</div>" .
+   print "<p class=form-control-static>&nbsp; Open</p>" .
      "<input name='bug_data[Status]' type='hidden' value='Open' />\n";
 ?>
-  </td>
- </tr>
+    </div>
+ </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ <div class=form-group>
+ <label class='control-label col-sm-2'><em>Brief</em> Summary*</label>
+ <div class='col-sm-6'>
+ <input class=form-control name="bug_data[Summary]" type="text" size="40" maxlength="55" <?php
+  if ($bug_to_edit)
+   print " value='" . ereg_replace( "'", "&#039", $bug_to_edit["Summary"] ) . "' ";
+?> /></div></div>
+  
+  
+ <div class=form-group>
+   <label class='control-label col-sm-2'>Full Description*</label>
+   <div class=col-sm-6>
+   <textarea class=form-control name="bug_data[Description]"
+    placeholder='The more details the better'
+   rows="7" cols="50" <?php
+
+   print " " . CT_OPTIONAL_UGLY_NN4_HACK . " \n>";
+
+   if ($bug_to_edit)
+    print $bug_to_edit["Description"];
+
+?></textarea></div></div>
+  
+  
+
+
+
+
+ <?php
+
+ if ( $this_project["Project_Type"] == "Web-Based" )
+
+  {
+
+ ?>
+
+ <div class=form-group>
+  <label class='control-label col-sm-2'>
+Browser Specific?</label>
+
+  <div class=col-sm-2>
+<?php 
+
+   foreach(array('Y' => 'Y', 'N' => 'N', 'D/K' => '') as $key => $value) {
+     print "<label class=radio-inline>";
+     print "<input type=radio name='bug_data[Browser_Specific' value='". $value ."'";
+     if ($bug_to_edit["Browser_Specific"] == $value) print " checked='checked' ";
+     print ">" . $key . "</label>\n";
+
+
+   }
+
+
+
+?> 
+</div>
+  <div class=col-sm-2>
+   <select class=form-control name='bug_data[Tested_Browser]'>
+<?php
+   foreach ($browser_name as $browser) {
+
+    if ( ($bug_to_edit["Tested_Browser"] == $browser) or
+     (!$bug_to_edit and $browser == CT_DEFAULT_BROWSER) )
+      print "\t\t\t\t<option value='$browser' selected='selected'>$browser</option>\n";
+    else
+     print "\t\t\t\t<option value='$browser'>$browser</option>\n";
+   }
+?>
+   </select></div>
+
+  <div class=col-sm-2>
+   <select class=form-control name='bug_data[Tested_OS]'>
+<?php
+   foreach ($OS_name as $OS) {
+
+    if ( (!$bug_to_edit and $OS == CT_DEFAULT_OS) or
+     ($bug_to_edit["Tested_OS"] == $OS) )
+     print "<option value='$OS' selected='selected'>$OS</option> \n";
+    else
+     print "<option value='$OS'>$OS</option> \n";
+   }
+?>
+
+  </select></div>
+
+</div>
+
+<?php
+
+ }  # End of Web-Based Project Check
+
+?>
+ <div class=form-group>
+   <label class='control-label col-sm-2'>Attachment</label>
+   <div class=col-sm-5><p class=form-control-static>
+   <?php
+
+    if ( isset($bug_to_edit["Attachment"]) ) {
+      print "&nbsp;<span class='txtSpecial'>" .
+        "<a href='attachments/" . $bug_to_edit["Attachment"] . "' " .
+        "onclick=\"this.target='_blank';\" >" .
+        $bug_to_edit["Attachment"] . "</a></span>".
+        "<input name='bug_data[Attachment]' type='hidden' value='".
+        $bug_to_edit["Attachment"] . "' />";
+    }
+    else {
+     print "<input name='Attachment' type='file' size='40'  />\n";
+    }
+
+?>
+</p></div></div>
+
+
+
+ 
+ <div class=form-group>
+    <label class='col-sm-3 control-label'></label>
+    <div class='col-sm-3'>  
+        <input type='submit' value=' Save ' class='btn btn-default' />
+        <a class='btn btn-default' href="codetrack.php?page=home">Cancel</a>
+        <input type='reset' value=' Undo ' class='btn btn-default' />
+    </div>
+    <div class='col-sm-2'>  
+  <?php if ($bug_to_edit) {
+
+    # A little complicated: If [some user role] is explictly blocked, and this user is not in that category...
+
+    if ( (CT_QA_ENFORCE_PRIVS) and ( !in_array($current_session_g["role"], explode(',' , CT_QA_WHO_CAN_CLOSE))) ) {
+     print "\n<p class='form-control-static'> [ ] </span> Delete Report ";
+    }
+    else {
+     print "\n<label class=control-label>" .
+       "\n<input type='checkbox' class=checkbox-inline name='bug_data[Delete_Bug]' value='Y' " .
+       "onclick='if (this.checked) " .
+       "return confirm(\"Checking the Delete box will permanently erase this report." .
+       '\nIf you really want to delete this report, click OK then press Save. ' .
+       '\nTo simply close the issue, cancel now and change the Status category.' .
+       "\");' />&nbsp; Delete Report </label>";
+    }
+   }
+  ?>
+  </div>
+ </div>
+
+ <div class=form-group></div>
+
+
 <?php
  if ($bug_to_edit) {
 ?>
 
- <tr>
-  <td colspan="2">
+ <hr>
 
-
+ <div class=form-group>
+  <label class='control-label col-sm-2'>
   <?php  print $this_project["Preferred_Title"] . " Comment \n"; ?>
-   <textarea name="bug_data[Developer_Comment]" rows="4" cols="50"
+  </label>
+  <div class=col-sm-6>
+   <textarea class=form-control name="bug_data[Developer_Comment]" rows="4" cols="50"
   <?php
 
    print CT_OPTIONAL_UGLY_NN4_HACK . " >";
@@ -1410,13 +1468,16 @@ FUNCTION draw_add_edit_bug_form( $project_table, $user_table, $bug_id="" ) {
     print "$comment";
    }
 
-  ?></textarea>
-  </td>
-  <td>
+  ?></textarea></div>
+</div>
 
+ <div class=form-group>
+  <label class='control-label col-sm-2'>
   <?php  print $this_project["Preferred_Title"] . " Response \n"; ?>
+  </label>
 
-   <select name='bug_data[Developer_Response]'>
+  <div class=col-sm-2>
+   <select class=form-control name='bug_data[Developer_Response]'>
     <?php
     foreach ($developer_response as $response) {
       if ( (!$bug_to_edit and $response == CT_DEFAULT_DEVELOPER_RESPONSE) or
@@ -1425,16 +1486,19 @@ FUNCTION draw_add_edit_bug_form( $project_table, $user_table, $bug_id="" ) {
      else
       print "<option value=\"$response\">$response</option> \n";
     }
-   ?></select>
-  </td>
- </tr>
+   ?></select></div>
+
+  </div>
 
 <?php
 
  }  # End of Edited Bug-specific widgets
+?>
 
- print "<tr>\n\t\t<td colspan='3'>\n\t\tAssign To: \n<div class='bugFormGroup'>";
- print "<select name='bug_data[Assign_To]'><option value=''>&nbsp;</option>";
+ <div class=form-group>
+ <label class='control-label col-sm-2'>Assign To</label>
+ <div class=col-sm-2>
+<?php print "<select name='bug_data[Assign_To]' class='form-control'><option value=''>&nbsp;</option>";
 
  if ($bug_to_edit)
   $assignee = $bug_to_edit["Assign_To"];
@@ -1450,32 +1514,32 @@ FUNCTION draw_add_edit_bug_form( $project_table, $user_table, $bug_id="" ) {
 
  if ( CT_ENABLE_EMAIL ) {
 
-  print "<label title='Send an email to the Assignee'><input type='checkbox' name='send_mail' value='1' />".
-    "&#x2709;</label> \n";
+  ?>
+ <label class='checkbox-inline'>
+  <input type='checkbox' name='send_mail' value='1'>&#x2709;</label>
 
-  print "<label title='Send an email to these people too'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cc: ";
-  print "<select name='cc_list[]' multiple='multiple' size='3'>";
+  </div>
+  <label title='Send an email to these people too' class='control-label col-sm-2'> cc:</label>
+  <div class=col-sm-2>
+  <select class=form-control name='cc_list[]' multiple='multiple' size='3'>
 
+  <?php 
   for ($i=0; $i < $user_cnt; $i++) {
    print "<option value=\"{$user_table[$i]["Email"]}\">" .
      $user_table[$i]["Full_Name"] . "</option>\n" ;
   }
-  print "</select></label>\n";
  }
 
 ?>
 
-  </div></td>
- </tr>
- </table>
- </div>
+  </select></div>
+  </div>
 <?php
   if ($bug_to_edit) {
    print "<input name='id' type='hidden' value='" . $bug_to_edit["ID"] . "' />\n" ;
    print "<input name='original_submit_time' type='hidden' value ='" . $bug_to_edit["Submit_Time"] . "' />\n" ;
   }
 ?>
- </div>
  </form>
  <script type="text/javascript" src="javascript/bugform_prevalidate.js"> </script>
  <script type="text/javascript" src="javascript/form_validate.js"> </script>
@@ -1732,7 +1796,7 @@ FUNCTION draw_prev_next_buttons( $prev_id, $next_id, &$bug_to_edit, $destination
 
  $id = "{$bug_to_edit['ID']}";  # Force string promotion
 
-?><div class='subNav'>
+?><div>
  <form class=block-inline action='codetrack.php' method='get' style='float:left'>
    <input type='hidden' name='page' value='<?php print $destination_page; ?>' />
    <input type='hidden' name='id'   value='<?php print "$prev_id"; ?>' />
